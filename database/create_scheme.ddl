@@ -144,6 +144,9 @@ CREATE TABLE uzytkownik (
     data_urodzenia DATE
 );
 
+ALTER TABLE uzytkownik ADD password VARCHAR(255);
+ALTER TABLE uzytkownik ADD refreshToken VARCHAR(256);
+
 ALTER TABLE uzytkownik ADD CONSTRAINT uzytkownik_pk PRIMARY KEY ( id );
 
 ALTER TABLE film
