@@ -23,11 +23,11 @@ CREATE TABLE film (
     id                      SERIAL NOT NULL,
     tytul_polski            VARCHAR(512),
     tytul_orginalny         VARCHAR(512) NOT NULL,
-    data_swiatowej_premiery DATE NOT NULL,
+    data_swiatowej_premiery DATE,
     data_polskiej_premeiry  DATE,
     czas_trwania            INTEGER,
     opis                    TEXT,
-    czlowiek_kina_id        INTEGER NOT NULL
+    czlowiek_kina_id        INTEGER
 );
 
 ALTER TABLE film ADD CONSTRAINT film_pk PRIMARY KEY ( id );
@@ -95,7 +95,7 @@ CREATE TABLE rola (
     id               SERIAL NOT NULL,
     bohater          VARCHAR(256) NOT NULL,
     opis             TEXT,
-    czlowiek_kina_id INTEGER NOT NULL,
+    czlowiek_kina_id INTEGER,
     film_id          INTEGER,
     serial_id        INTEGER
 );
@@ -113,7 +113,7 @@ CREATE TABLE serial (
     tytul_polski     VARCHAR(512),
     tytul_orginalny  VARCHAR(512) NOT NULL,
     opis             TEXT,
-    czlowiek_kina_id INTEGER NOT NULL
+    czlowiek_kina_id INTEGER
 );
 
 ALTER TABLE serial ADD CONSTRAINT serial_pk PRIMARY KEY ( id );
