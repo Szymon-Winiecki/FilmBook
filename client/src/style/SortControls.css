@@ -1,0 +1,7 @@
+.sort-in-use{
+    color: var(--primary-text1-color);
+}
+
+.sort-unused{
+    color: var(--primary-text2-color);
+}

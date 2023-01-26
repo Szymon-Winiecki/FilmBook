@@ -1,0 +1,21 @@
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    padding-left: 50px;
+}
+
+.header-primary-text{
+    font-size: 25pt;
+    font-weight: bold;
+}
+
+.header-secondary-text{
+    font-size: 14pt;
+    font-weight: lighter;
+}

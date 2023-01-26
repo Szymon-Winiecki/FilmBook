@@ -1,0 +1,40 @@
+.movies-list-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.movies-list-header{
+    display: grid;
+    grid-template-columns: 100px 1fr 100px;
+
+    width: 100%;
+    height: 30px;
+
+    background-color: var(--elem-primary-color);
+}
+
+.movies-list{
+    width: 100%;
+}
+
+.no-header{
+    grid-column: 1/2;
+}
+
+.title-header{
+    grid-column: 2/3;
+
+    display: flex;
+    justify-content: left;
+}
+
+.rate-header{
+    grid-column: 3/4;
+}

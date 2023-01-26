@@ -1,0 +1,47 @@
+.movie-row{
+    display: grid;
+    grid-template-columns: 100px 1fr 100px;
+
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    background-color: var(--elem-primary-color);
+
+    border-width: 0px 0px 1px 0px;
+    border-color: black;
+    border-style: solid;
+}
+
+.movie-row:hover{
+    background-color: var(--elem-primary-high-color);
+}
+
+.movie-row.selected{
+    background-color: var(--elem-primary-sel-color);
+}
+
+.movie-row:first-child{
+    border-width: 1px 0px 1px 0px;
+}
+
+.movie-row>div{
+    /*center vertically*/
+    display: flex;
+    align-items: center;
+}
+
+.no-field{
+    grid-column: 1/2;
+}
+
+.title-field{
+    grid-column: 2/3;
+
+    display: flex;
+    justify-content: left;
+}
+
+.rate-field{
+    grid-column: 3/4;
+}

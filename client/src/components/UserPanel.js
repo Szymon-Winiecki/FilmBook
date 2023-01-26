@@ -1,0 +1,39 @@
+import React from 'react';
+
+import '../style/UserPanel.css';
+
+class UserPanel extends React.Component {
+    render(){
+        if(this.props.user){
+            return (
+                <div className='user-panel'>
+                    <div className='user-panel-info'>
+                        <div className='user-panel-avatar'><i class="bi bi-person-circle"></i></div>
+                        <div className='user-panel-name'>{this.props.user.username}</div>
+                    </div>
+                    <div className='user-panel-logout'>
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>log out</span>
+                    </div>
+                </div>
+            );
+        }
+        else{
+            return (
+                <div className='user-panel'>
+                    <div className='user-panel-login' >
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span>log in</span>
+                    </div>
+                    <div className='user-panel-register'>
+                        <i class="bi bi-pencil-square"></i>
+                        <span>register</span>
+                    </div>
+                </div>
+            );
+        }
+        
+    }
+}
+
+export default UserPanel;
