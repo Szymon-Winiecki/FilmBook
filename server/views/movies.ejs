@@ -1,0 +1,31 @@
+<%- include('head', { title: 'Filmy' }) -%>
+
+<h1>Filmy</h1>
+<p>
+    <label for="genre">Gatunek:</label>
+    <select id="genre" name="genre">
+        <% for(var i = 0; i < genres.length; i++) { %>
+            <option><%= i %></option>
+        <% } %>
+    </select>
+</p>
+
+<p>
+    <label for="sort">Sortuj wg:</label>
+    <select id="sort" name="sort">
+        <option></option>
+    </select>
+</p>
+
+
+<table>
+    <tr>
+        <th>lp.</th>
+        <th>tytuł (rok premiery)</th>
+        <th>ocena</th>
+    </tr>
+    <tr>
+    </tr>
+</table>
+
+<%- include('foot') -%>

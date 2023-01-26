@@ -1,5 +1,23 @@
 const database = require('../dbconn/dbPool');
 
+const genreController = require('../controllers/genreController');
+
+const moviesView = (req, res) => {
+    res.render("movies", {
+        genres: genreController.getAllGenres()
+    } );
+}
+
+const movieView = (req, res) => {
+    res.render("movie", {
+    } );
+}
+
+const addMovieView = (req, res) => {
+    res.render("addMovie", {
+    } );
+}
+
 function getAllMovies(req, res){
     const query = `select * from film;`
     database.query(query, (qerr, qres) => {
@@ -64,6 +82,9 @@ function deleteMovie(req, res){
 }
 
 module.exports = {
+    moviesView,
+    movieView,
+    addMovieView,
     getAllMovies,
     getMovie,
     addMovie,
