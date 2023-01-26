@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/users', usersRoutes);
-app.use('/api/movie', movieRoutes);
+app.use('/', movieRoutes);
 app.use('/api/person', personRoutes);
 app.use('/api/genre', genreRoutes);
 app.use('/api/role', roleRoutes);
@@ -39,10 +39,6 @@ app.use(function(err, req, res, next) {
 // not found
 app.use(function(req, res, next) {
     res.status(404).render('404', { url: req.originalUrl });
-});
-
-app.get('/', (req, res) => {
-    res.send('Welcome to FilmBook!')
 });
 
 let port = process.env.PORT || 3000;

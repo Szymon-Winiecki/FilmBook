@@ -1,0 +1,58 @@
+<%- include('head', { title: 'Dodaj Film' }) -%>
+
+<h1>Dodaj Film</h1>
+<p>
+    <label for="tytul_orginalny">Tytuł oryginalny:</label>
+    <input type="text" name="tytul_orginalny" id="tytul_orginalny">
+</p>
+
+<p>
+    <label for="tytul_polski">Tytuł polski:</label>
+    <input type="text" name="tytul_polski" id="tytul_polski">
+</p>
+
+<p>
+    <label for="data_swiatowej_premiery">Premiera światowa:</label>
+    <input type="date" name="data_swiatowej_premiery" id="data_swiatowej_premiery">
+</p>
+
+<p>
+    <label for="data_polskiej_premeiry">Premiera polska:</label>
+    <input type="text" name="data_polskiej_premeiry" id="data_polskiej_premeiry">
+</p>
+
+<p>
+    <label for="czas_trwania">Czas trwania:</label>
+    <input type="time" name="czas_trwania" id="czas_trwania">
+</p>
+
+<p>
+    <label for="opis">Opis:</label>
+    <textarea type="time" name="opis" id="opis"></textarea>
+</p>
+
+<p>
+    <label for="">Reżyseria:</label>
+    <textarea type="time" name="" id=""></textarea>
+</p>
+
+
+<p>
+    <label for="sort">Sortuj wg:</label>
+    <select id="sort" name="sort">
+        <option></option>
+    </select>
+</p>
+
+
+<table>
+    <tr>
+        <th>lp.</th>
+        <th>tytuł (rok premiery)</th>
+        <th>ocena</th>
+    </tr>
+    <tr>
+    </tr>
+</table>
+
+<%- include('foot') -%>

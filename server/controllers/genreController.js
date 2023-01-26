@@ -1,15 +1,21 @@
 const database = require('../dbconn/dbPool');
 
-function getAllGenres(req, res){
-    const query = `select * from gatunek;`
-    database.query(query, (qerr, qres) => {
-        if(qerr){
-            console.error(qerr);
-            console.error(query);
-            return res.sendStatus(500);
-        }
-        res.status(200).json(qres.rows);
-    })
+function fetchData(query) {
+    return new Promise((resolve, reject) => {
+        database.query(query, (qerr, qres) => {
+            if(qerr){
+                console.error(qerr);
+                console.error(query);
+            }
+            resolve(qres.rows);
+        });
+    });
+}
+
+async function getAllGenres(){
+    const query = `select * from gatunek;`;
+    const data = await fetchData(query);
+    return data;
 }
 
 function getGenre(req, res){
