@@ -5,53 +5,6 @@ import Movie from './Movie';
 import SortControls from './SortControls';
 
 class MoviesList extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            movies: this.props.movies,
-            sortField: "",
-            sortDir: 0
-        }
-    }
-
-    sortByString(a, b, dir){
-        if(typeof a != 'string') a = a.toString();
-        if(typeof b != 'string') b = b.toString();
-
-        if(dir == 1) return a.localeCompare(b);
-        if(dir == -1) return b.localeCompare(a);
-        else return 0;
-    }
-
-    handleSort(field, dir){
-        if(this.state.sortField == field && this.state.sortDir == dir){
-            this.setState({
-                sortField: "",
-                sortDir: 0
-            });
-        }
-        else{
-            this.setState({
-                sortField: field,
-                sortDir: dir
-            });
-        }
-
-        if(dir == 0) return;
-
-
-        const sorted = [...this.state.movies].sort((a, b)  => {
-            return this.sortByString(a[field], b[field], dir);
-        });
-
-        this.setState({
-            movies: sorted
-        });
-        
-    }
-
     getMovie(movie){
         return (
             <Movie key={movie.id.toString()} movie={movie} />
@@ -59,29 +12,60 @@ class MoviesList extends React.Component {
     }
 
     getMovies(){
-        if(this.state.movies == null){
-            return <div>No results</div>
+        if(this.props.movies == null){
+            return <div>Brak wyników</div>
         }
         const movies = [];
-        this.state.movies.forEach(movie => {
+        this.props.movies.forEach(movie => {
             movies.push(this.getMovie(movie));
         });
 
         return movies;
     }
 
+    getGenres(){
+        if(this.props.movies == null){
+            return <option value='all'> wszystkie </option>
+        }
+        const movies = [];
+        movies.push( <option value='all'> wszystkie </option> );
+        this.props.genres.forEach(genre => {
+            movies.push( <option value={genre}> {genre} </option> );
+        });
+
+        return movies;
+    }
+
     render(){
-        const sortField = this.state.sortField;
-        const sortDir = this.state.sortDir
         return (
-            <div className='movies-list-container'>
-                <div className='movies-list-header'>
-                    <div className='no-header'>lp. <SortControls type="numbers" sortDir={ sortField=="no" ? sortDir : 0} onAsc={() => {this.handleSort("no", 1)}} onDesc={() => {this.handleSort("no", -1)}} /></div>
-                    <div className='title-header'>tytuł <SortControls sortDir={ sortField=="title" ? sortDir : 0} onAsc={() => {this.handleSort("title", 1)}} onDesc={() => {this.handleSort("title", -1)}} /></div>
-                    <div className='rate-header'>ocena <SortControls type="numbers" sortDir={ sortField=="rate" ? sortDir : 0} onAsc={() => {this.handleSort("rate", 1)}} onDesc={() => {this.handleSort("rate", -1)}} /></div>
+            <div className='movies-list-site'>
+                <h1 className='section-title'>Filmy</h1>
+                <div className='movie-list-controlls'>
+                    <div className='list-controll'>
+                        <label for='genre-select' class='list-control-label'>Gatunek: </label>
+                        <select id='genre-select'>
+                            {this.getGenres()}
+                        </select>
+                    </div>
+                    <div className='list-controll'>
+                        <label for='sort-select' class='list-control-label'>Sortuj wg: </label>
+                        <select id='sort-select'>
+                            <option value='rate_asc'>ocena (rosnąco)</option>
+                            <option value='rate_desc'>ocena (malejąco)</option>
+                            <option value='title_asc'>tytuł (rosnąco)</option>
+                            <option value='title_desc'>tytuł (malejąco)</option>
+                        </select>
+                    </div>
                 </div>
-                <div className="movies-list">
-                    {this.getMovies()}
+                <div className='movies-list-container'>
+                    <div className='movies-list-header'>
+                        <div className='no-header'>lp.</div>
+                        <div className='title-header'>tytuł</div>
+                        <div className='rate-header'>ocena</div>
+                    </div>
+                    <div className="movies-list">
+                        {this.getMovies()}
+                    </div>
                 </div>
             </div>
         );
