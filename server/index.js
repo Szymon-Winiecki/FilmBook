@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 require('dotenv').config();
 var path = require('path');
 
@@ -12,6 +13,8 @@ const roleRoutes = require('./routes/roleRoutes.js');
 const loginRoutes = require('./routes/loginRoutes.js');
 
 const app = express();
+
+app.use(cors());
 
 // prevents the need for using file extensions
 app.set('view engine', 'ejs');
@@ -26,7 +29,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/users', usersRoutes);
-app.use('/', movieRoutes);
+app.use('/api/movie', movieRoutes);
 app.use('/api/person', personRoutes);
 app.use('/api/genre', genreRoutes);
 app.use('/api/role', roleRoutes);

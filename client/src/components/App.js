@@ -53,6 +53,17 @@ const navbar = [
 ]
 
 class App extends React.Component {
+
+    constructor(props){
+        super(props);
+
+        this.fetchMovies();
+    }
+
+    fetchMovies(){
+        fetch('http://127.0.0.1:3520/api/movie').then((response) => response.json()).then((data) => console.log(data));
+    }
+
     render(){
         return (
             <div className='container'>
