@@ -4,9 +4,9 @@ import '../style/Header.css';
 
 class Header extends React.Component {
 
-    getNav(nav){
+    getNav(nav, i){
         return(
-            <div className='header-nav' onClick={nav.onClick}>
+            <div className='header-nav' onClick={nav.onClick} key={i}>
                 {nav.label}
             </div>
         );

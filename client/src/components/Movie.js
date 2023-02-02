@@ -15,7 +15,7 @@ class Movie extends React.Component {
                     </div>
                     <span className='movie-title-original'>{ this.props.movie.originalTitle } </span>
                 </div>
-                <div className='rate-field'> {this.props.movie.rate.toFixed(1)}/10 <i class="bi bi-star-fill"></i></div>
+                <div className='rate-field'> {this.props.movie.rate.toFixed(1)}/10 <i className="bi bi-star-fill"></i></div>
             </div>
         );
     }

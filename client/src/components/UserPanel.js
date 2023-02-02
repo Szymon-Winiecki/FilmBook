@@ -12,7 +12,7 @@ class UserPanel extends React.Component {
                         <div className='user-panel-name'>{this.props.user.username}</div>
                     </div>
                     <div className='user-panel-logout'>
-                        <i class="bi bi-box-arrow-right"></i>
+                        <i className="bi bi-box-arrow-right"></i>
                         <span>log out</span>
                     </div>
                 </div>
@@ -22,11 +22,11 @@ class UserPanel extends React.Component {
             return (
                 <div className='user-panel'>
                     <div className='user-panel-login' >
-                        <i class="bi bi-box-arrow-in-right"></i>
+                        <i className="bi bi-box-arrow-in-right"></i>
                         <span>log in</span>
                     </div>
                     <div className='user-panel-register'>
-                        <i class="bi bi-pencil-square"></i>
+                        <i className="bi bi-pencil-square"></i>
                         <span>register</span>
                     </div>
                 </div>

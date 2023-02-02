@@ -42,13 +42,13 @@ class MoviesList extends React.Component {
                 <h1 className='section-title'>Filmy</h1>
                 <div className='movie-list-controlls'>
                     <div className='list-controll'>
-                        <label for='genre-select' class='list-control-label'>Gatunek: </label>
+                        <label htmlFor='genre-select' className='list-control-label'>Gatunek: </label>
                         <select id='genre-select'>
                             {this.getGenres()}
                         </select>
                     </div>
                     <div className='list-controll'>
-                        <label for='sort-select' class='list-control-label'>Sortuj wg: </label>
+                        <label htmlFor='sort-select' className='list-control-label'>Sortuj wg: </label>
                         <select id='sort-select'>
                             <option value='rate_asc'>ocena (rosnąco)</option>
                             <option value='rate_desc'>ocena (malejąco)</option>
