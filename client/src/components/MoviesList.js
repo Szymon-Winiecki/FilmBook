@@ -1,10 +1,20 @@
 import React from 'react';
 
+import const_props from '../constant_properties';
 import '../style/MoviesList.css';
 import Movie from './Movie';
-import SortControls from './SortControls';
 
 class MoviesList extends React.Component {
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            movies: [],
+            genres: []
+        };
+    }
+
     getMovie(movie){
         return (
             <Movie key={movie.id.toString()} movie={movie} />
@@ -16,7 +26,9 @@ class MoviesList extends React.Component {
             return <div>Brak wyników</div>
         }
         const movies = [];
-        this.props.movies.forEach(movie => {
+        this.state.movies.forEach((movie, i) => {
+            movie.no = i + 1;
+            movie.rate = 9;
             movies.push(this.getMovie(movie));
         });
 
@@ -29,11 +41,34 @@ class MoviesList extends React.Component {
         }
         const movies = [];
         movies.push( <option value='all'> wszystkie </option> );
-        this.props.genres.forEach(genre => {
-            movies.push( <option value={genre}> {genre} </option> );
+        this.state.genres.forEach(genre => {
+            movies.push( <option value={genre.nazwa}> {genre.nazwa} </option> );
         });
 
         return movies;
+    }
+
+    fetchMovies(){
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie`).then((response) => response.json()).then((data) => {
+            console.log(data);
+            this.setState({
+                movies: data
+            });
+        });
+    }
+
+    fetchGenres(){
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/genre`).then((response) => response.json()).then((data) => {
+            console.log(data);
+            this.setState({
+                genres: data
+            });
+        });
+    }
+
+    componentDidMount(){
+        this.fetchMovies();
+        this.fetchGenres();
     }
 
     render(){

@@ -6,6 +6,7 @@ import Header from './Header';
 import Footer from './Footer';
 import UserPanel from './UserPanel';
 import MoviesList from './MoviesList';
+import const_props from '../constant_properties';
 
 const movies = [
     {
@@ -53,16 +54,6 @@ const navbar = [
 ]
 
 class App extends React.Component {
-
-    constructor(props){
-        super(props);
-
-        this.fetchMovies();
-    }
-
-    fetchMovies(){
-        fetch('http://127.0.0.1:3520/api/movie').then((response) => response.json()).then((data) => console.log(data));
-    }
 
     render(){
         return (
