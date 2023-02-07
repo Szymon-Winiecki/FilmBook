@@ -1,0 +1,43 @@
+.register-form-site{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.register-form-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    row-gap: 20px;
+
+    margin-bottom: 40px;
+}
+
+.register-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    row-gap: 20px;
+}
+
+.register-form>div{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+.register-form>div>input{
+    min-width: 200px;
+}

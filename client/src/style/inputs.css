@@ -1,0 +1,49 @@
+
+input[type="text"].s-input, input[type="password"].s-input, input[type="date"].s-input, input[type="tel"].s-input, input[type="email"].s-input{
+    background-color: var(--main-background-tint-color);
+
+    border-style: solid;
+    border-width: 0 0 2px 0;
+
+    padding: 0 4px 0 4px;
+}
+
+input[type="text"].s-input:focus-visible, input[type='password'].s-input:focus-visible, input[type="date"].s-input:focus-visible, input[type="tel"].s-input:focus-visible, input[type="email"].s-input:focus-visible{
+    outline: none;
+}
+
+input.s-input.validated:invalid{
+    background-color: var(--main-background-error-color);
+}
+
+input[type="button"].s-input{
+    background-color: var(--main-background-color);
+    
+    border-radius: 4px;
+    border-width: 1px;
+
+    padding: 8px 16px 8px 16px;
+
+    font-size: 14pt;
+    font-weight: 400;
+}
+
+input[type="button"].s-input:hover{
+    border-width: 2px;
+    padding: 7px 15px 7px 15px;
+}
+
+input[type="button"].s-input:active{
+    border-width: 2px 2px 3px 3px;
+    padding: 7px 15px 6px 14px;
+}
+
+.s-input.pseudo-link{
+    text-decoration: underline;
+
+    cursor: default;
+}
+
+.s-input.pseudo-link:hover{
+    text-decoration: none;
+}

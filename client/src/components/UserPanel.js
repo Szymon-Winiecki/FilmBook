@@ -21,11 +21,11 @@ class UserPanel extends React.Component {
         else{
             return (
                 <div className='user-panel'>
-                    <div className='user-panel-login' >
+                    <div className='user-panel-login' onClick={this.props.onLogin}>
                         <i className="bi bi-box-arrow-in-right"></i>
                         <span>log in</span>
                     </div>
-                    <div className='user-panel-register'>
+                    <div className='user-panel-register' onClick={this.props.onRegister}>
                         <i className="bi bi-pencil-square"></i>
                         <span>register</span>
                     </div>

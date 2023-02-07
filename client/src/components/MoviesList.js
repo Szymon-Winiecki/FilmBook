@@ -22,7 +22,7 @@ class MoviesList extends React.Component {
     }
 
     getMovies(){
-        if(this.props.movies == null){
+        if(this.state.movies == null){
             return <div>Brak wyników</div>
         }
         const movies = [];
@@ -36,7 +36,7 @@ class MoviesList extends React.Component {
     }
 
     getGenres(){
-        if(this.props.movies == null){
+        if(this.state.genres == null){
             return <option value='all'> wszystkie </option>
         }
         const movies = [];
@@ -50,7 +50,6 @@ class MoviesList extends React.Component {
 
     fetchMovies(){
         fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie`).then((response) => response.json()).then((data) => {
-            console.log(data);
             this.setState({
                 movies: data
             });
@@ -59,7 +58,6 @@ class MoviesList extends React.Component {
 
     fetchGenres(){
         fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/genre`).then((response) => response.json()).then((data) => {
-            console.log(data);
             this.setState({
                 genres: data
             });

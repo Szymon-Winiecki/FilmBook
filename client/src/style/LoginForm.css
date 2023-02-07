@@ -1,0 +1,43 @@
+.login-form-site{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.login-form-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    row-gap: 20px;
+
+    margin-bottom: 40px;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    row-gap: 20px;
+}
+
+.login-form>div{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+.login-form>div>input{
+    min-width: 200px;
+}
