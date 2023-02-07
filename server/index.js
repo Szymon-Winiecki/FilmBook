@@ -10,7 +10,7 @@ const movieRoutes = require('./routes/movieRoutes.js');
 const personRoutes = require('./routes/personRoutes.js');
 const genreRoutes = require('./routes/genreRoutes.js');
 const roleRoutes = require('./routes/roleRoutes.js');
-const loginRoutes = require('./routes/loginRoutes.js');
+const authRoutes = require('./routes/authRoutes.js');
 
 const app = express();
 
@@ -33,7 +33,7 @@ app.use('/api/movie', movieRoutes);
 app.use('/api/person', personRoutes);
 app.use('/api/genre', genreRoutes);
 app.use('/api/role', roleRoutes);
-app.use('/', loginRoutes); // both login and register
+app.use('/', authRoutes); // both login and register
 
 // errors
 app.use(function(err, req, res, next) {
