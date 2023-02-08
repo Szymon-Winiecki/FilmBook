@@ -23,7 +23,7 @@ function logout(cookies, callback){
                 clearCookies:[
                     {
                         name: 'jwt',
-                        options: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }
+                        options: { httpOnly: true, sameSite: 'None', secure: true}
                     }
                 ]
             }
@@ -39,7 +39,7 @@ function logout(cookies, callback){
                 clearCookies:[
                     {
                         name: 'jwt',
-                        options: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }
+                        options: { httpOnly: true, sameSite: 'None', secure: true}
                     }
                 ]
             }

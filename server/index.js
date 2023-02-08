@@ -4,6 +4,8 @@ const cors = require('cors');
 require('dotenv').config();
 var path = require('path');
 
+const corsOptions = require('./conf/corsOptions');
+const credentials = require('./middleware/credentials');
 
 const usersRoutes = require('./routes/usersRoutes.js');
 const movieRoutes = require('./routes/movieRoutes.js');
@@ -14,7 +16,8 @@ const authRoutes = require('./routes/authRoutes.js');
 
 const app = express();
 
-app.use(cors());
+app.use(credentials);
+app.use(cors(corsOptions));
 
 // prevents the need for using file extensions
 app.set('view engine', 'ejs');

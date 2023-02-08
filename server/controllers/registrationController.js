@@ -23,7 +23,7 @@ function registerNewUser(newUserData, callback){
                         //user with givent username already exists - usernames conflict
                         const error = {
                             status: 409,
-                            userMessage: "this username is taken, try another one",
+                            userMessage: "this username is taken, try another one"
                         };
                         callback(error, null);
                         return;
@@ -37,7 +37,10 @@ function registerNewUser(newUserData, callback){
                         //registration successful
                         const result = {
                             status: 200,
-                            data: `user ${username} registered`
+                            data: { 
+                                message: `user ${username} registered`,
+                                username: username
+                            }
                         };
 
                         client.query('COMMIT', err => {

@@ -41,3 +41,7 @@
 .register-form>div>input{
     min-width: 200px;
 }
+
+.register-form-site .error-text{
+    color: var(--main-text-error-color);
+}

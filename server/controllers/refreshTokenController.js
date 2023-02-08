@@ -42,7 +42,10 @@ function refreshToken(cookies, callback){
             );
             result = {
                 status: 200,
-                data: accessToken
+                data: {
+                    accessToken: accessToken,
+                    username: decoded.username
+                }
             }
             callback(null, result);
         });

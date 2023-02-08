@@ -57,12 +57,14 @@ function login(userData, callback){
                     
                     const result = {
                         status: 200,
-                        data: accessToken,
+                        data: {
+                            accessToken: accessToken,
+                        },
                         cookies: [
                             {
                                 name: 'jwt',
                                 value: refreshToken,
-                                options: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }
+                                options: { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 }
                             }
                         ]
                     };

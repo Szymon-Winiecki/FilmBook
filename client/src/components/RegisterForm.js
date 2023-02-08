@@ -1,5 +1,7 @@
 import React from 'react';
 
+import const_props from '../constant_properties';
+
 import '../style/RegisterForm.css';
 import '../style/inputs.css';
 
@@ -25,9 +27,62 @@ class RegisterForm extends React.Component {
         return valid;
     }
 
-    register(){
-        if(this.validateFields()){
-            //TODO
+    async register(){
+        if(!this.validateFields()) return;
+
+        const userData = {
+            username: document.getElementById('username-input').value,
+            email: document.getElementById('email-input').value,
+            password: document.getElementById('password-input').value
+        }
+
+        try{
+            const response = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(userData)
+            });
+
+            /*console.log(response.status);
+            console.log(response.ok);
+            if(response.ok){
+                const data = await response.json()
+                console.log(data);
+            }*/
+            
+
+            if(!response.ok){
+                const message = await response.text();
+                this.setState({ 
+                    error: response.status,
+                    errorMessage: message
+                });
+            }
+            else{
+                //TODO
+            }
+
+        } catch (err){
+            console.log(err);
+        }
+    }
+
+    getErrorMessage(error){
+        const messages = {
+            400: 'Niepoprawne dane',
+            409: 'Użytkownik o podanej nazwie już istnieje',
+            500: 'Błąd serwera, spróbuj ponownie później'
+        }
+
+        if(messages[error]){
+            if(error == 400){
+                return `${messages[error]}(${this.state?.errorMessage})`;
+            }
+            return messages[error];
+        }
+        else{
+            return 'Wystąpił nieznany błąd, przepraszamy';
         }
     }
 
@@ -64,6 +119,7 @@ class RegisterForm extends React.Component {
                     </div>
                     <span>* - pola wymagane</span>
                     <input id='register-button' type="button" value='Zarejestruj się' onClick={() => this.register()} className='s-input'></input>
+                    <span className='error-text'>{this.state?.error ? this.getErrorMessage(this.state.error) : ''}</span>
                 </div>
                 
             </div>
