@@ -27,6 +27,8 @@
     align-items: center;
     justify-content: space-around;
     row-gap: 20px;
+
+    margin-bottom: 20px;
 }
 
 .register-form>div{
@@ -44,4 +46,5 @@
 
 .register-form-site .error-text{
     color: var(--main-text-error-color);
+    font-weight: 600;
 }

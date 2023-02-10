@@ -19,8 +19,8 @@ function login(userData, callback){
         if (res.rowCount == 0){
             //there is no user with given username
             const error = {
-                status: 404,
-                userMessage: 'Wrong username'
+                status: 401,
+                userMessage: 'Wrong username or password'
             }
             callback(error, null);
             return;

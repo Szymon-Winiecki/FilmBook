@@ -60,7 +60,7 @@ class RegisterForm extends React.Component {
                 });
             }
             else{
-                //TODO
+                this.props.onLogin();
             }
 
         } catch (err){
@@ -119,8 +119,8 @@ class RegisterForm extends React.Component {
                     </div>
                     <span>* - pola wymagane</span>
                     <input id='register-button' type="button" value='Zarejestruj się' onClick={() => this.register()} className='s-input'></input>
-                    <span className='error-text'>{this.state?.error ? this.getErrorMessage(this.state.error) : ''}</span>
                 </div>
+                <span className='error-text'>{this.state?.error ? this.getErrorMessage(this.state.error) : ''}</span>
                 
             </div>
         );

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 
 import '../style/App.css';
+
+import const_props from '../constant_properties'
 
 import Header from './Header';
 import Footer from './Footer';
@@ -33,8 +35,44 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            site: sites.LOGIN_FORM
+            site: sites.LOGIN_FORM,
+            username: undefined,
+            accessToken: undefined
         };
+    }
+
+    async logOut(){
+        try{
+            const response = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/logout`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            });            
+
+            if(!response.ok){
+                this.setState({ 
+                    error: response.status,
+                });
+
+                console.log(response.status);
+            }
+            else{
+                console.log(response.status);
+
+                this.changeUser(undefined, undefined);
+                this.changeSite(sites.LOGIN_FORM);
+            }
+
+        } catch (err){
+            console.log(err);
+        }
+    }
+
+    changeUser(username, accessToken){
+        this.setState({
+            username: username,
+            accessToken: accessToken
+        });
     }
 
     changeSite(site){
@@ -51,7 +89,7 @@ class App extends React.Component {
             return <MoviesList />;
         }
         else if(this.state.site == sites.LOGIN_FORM){
-            return <LoginForm onRegister={() => this.changeSite(sites.REGISTER_FORM)} />;
+            return <LoginForm onRegister={() => this.changeSite(sites.REGISTER_FORM)} onUserLoggedIn={(username, accessToken) => { this.changeUser(username, accessToken); this.changeSite(sites.MOVIES_LIST); }}/>;
         }
         else if(this.state.site == sites.REGISTER_FORM){
             return <RegisterForm onLogin={() => this.changeSite(sites.LOGIN_FORM)} />;
@@ -77,7 +115,7 @@ class App extends React.Component {
                     <Header primaryText="Filmbook" navs={this.navbar} />
                 </div>
                 <div className='user-panel-container'>
-                    <UserPanel onLogin={() => this.changeSite(sites.LOGIN_FORM)} onRegister={() => this.changeSite(sites.REGISTER_FORM)}/>
+                    <UserPanel onLogin={() => this.changeSite(sites.LOGIN_FORM)} onRegister={() => this.changeSite(sites.REGISTER_FORM)} username={this.state.username} onLogout={() => { this.logOut()} }/>
                 </div>
                 <div className='main-container'>
                     {this.getCurrentSite()}
