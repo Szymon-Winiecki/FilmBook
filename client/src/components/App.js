@@ -2,20 +2,23 @@ import React, { useReducer } from 'react';
 
 import '../style/App.css';
 
-import const_props from '../constant_properties'
+import const_props from '../constant_properties';
+import { UserContext } from '../constant_properties';
 
 import Header from './Header';
 import Footer from './Footer';
-import UserPanel from './UserPanel';
+import HeaderUserSection from './HeaderUserSection';
 import MoviesList from './MoviesList';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import UserPanel from './UserPanel';
 
 const sites = {
     MOVIES_LIST: '#movies',
     SERIES_LIST: '#series',
     LOGIN_FORM: '#login',
-    REGISTER_FORM: '#register'
+    REGISTER_FORM: '#register',
+    USER_PANEL: '#userpanel'
 }
 
 class App extends React.Component {
@@ -36,8 +39,10 @@ class App extends React.Component {
 
         this.state = {
             site: sites.LOGIN_FORM,
-            username: undefined,
-            accessToken: undefined
+            user:{
+                username: undefined,
+                accessToken: undefined
+            }
         };
     }
 
@@ -70,8 +75,10 @@ class App extends React.Component {
 
     changeUser(username, accessToken){
         this.setState({
-            username: username,
-            accessToken: accessToken
+            user:{
+                username: username,
+                accessToken: accessToken
+            }
         });
     }
 
@@ -94,28 +101,38 @@ class App extends React.Component {
         else if(this.state.site == sites.REGISTER_FORM){
             return <RegisterForm onLogin={() => this.changeSite(sites.LOGIN_FORM)} />;
         }
+        else if(this.state.site == sites.USER_PANEL){
+            return <UserPanel />
+        }
         else{
             return <h1>404</h1>
+        }
+    }
+    
+    readAndChangeSite(){
+        const site = document.location.hash;
+        if(site && site.length > 1){
+            this.changeSite(site)
         }
     }
 
     componentDidMount(){
         window.onpopstate = ()=> {
-            const site = document.location.hash;
-            if(site && site.length > 1){
-                this.changeSite(site)
-            }
+            this.readAndChangeSite();
         }
+
+        this.readAndChangeSite();
     }
 
     render(){
         return (
+            <UserContext.Provider value={this.state.user}>
             <div className='container'>
                 <div className='header-container'>
                     <Header primaryText="Filmbook" navs={this.navbar} />
                 </div>
-                <div className='user-panel-container'>
-                    <UserPanel onLogin={() => this.changeSite(sites.LOGIN_FORM)} onRegister={() => this.changeSite(sites.REGISTER_FORM)} username={this.state.username} onLogout={() => { this.logOut()} }/>
+                <div className='user-section-container'>
+                    <HeaderUserSection onLogin={() => this.changeSite(sites.LOGIN_FORM)} onRegister={() => this.changeSite(sites.REGISTER_FORM)} onLogout={() => { this.logOut()} } onOpenUserPanel={() => { this.changeSite(sites.USER_PANEL); }} username={this.state.user.username}/>
                 </div>
                 <div className='main-container'>
                     {this.getCurrentSite()}
@@ -124,6 +141,7 @@ class App extends React.Component {
                     <Footer author='Szymon Winiecki Maciej Wieczorek' year='2023'/>
                 </div>
             </div>
+            </UserContext.Provider>
         );
     }
 }

@@ -46,7 +46,9 @@ function login(userData, callback){
                     { expiresIn: process.env.ACCESS_TOKEN_EXPIRATION_TIME }
                 );
                 const refreshToken = jwt.sign(
-                    { "username":userData.username }, 
+                    { 
+                        "username": userData.username
+                    }, 
                     process.env.REFRESH_TOKEN_SECRET, 
                     { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION_TIME }
                 );

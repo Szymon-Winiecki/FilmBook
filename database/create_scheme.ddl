@@ -70,10 +70,11 @@ ALTER TABLE odcinek ADD CONSTRAINT odcinek_pk PRIMARY KEY ( id );
 CREATE TABLE ranga (
     id            SERIAL NOT NULL,
     nazwa         VARCHAR(256) NOT NULL,
-    uzytkownik_id INTEGER NOT NULL
 );
 
 ALTER TABLE ranga ADD CONSTRAINT ranga_pk PRIMARY KEY ( id );
+
+--alter table ranga drop column uzytkownik_id;
 
 CREATE TABLE uprawnienia_rang (
     ranga_id          INTEGER NOT NULL,
@@ -82,6 +83,11 @@ CREATE TABLE uprawnienia_rang (
 
 ALTER TABLE uprawnienia_rang ADD CONSTRAINT uprawnienia_rang_pk PRIMARY KEY ( ranga_id,
                                                                     uprawnienie_nazwa );
+
+CREATE TABLE rangi_uzytkownikow(
+    ranga_id        INTEGER NOT NULL,
+    uzytkownik_id   INTEGER NOT NULL
+)
 
 CREATE TABLE gatunki_filmow (
     film_id    INTEGER NOT NULL,
@@ -169,9 +175,13 @@ ALTER TABLE odcinek
     ADD CONSTRAINT odcinek_sezon_fk FOREIGN KEY ( sezon_id )
         REFERENCES sezon ( id );
 
-ALTER TABLE ranga
-    ADD CONSTRAINT ranga_uzytkownik_fk FOREIGN KEY ( uzytkownik_id )
+ALTER TABLE rangi_uzytkownikow
+    ADD CONSTRAINT uzytkownik_fk FOREIGN KEY ( uzytkownik_id )
         REFERENCES uzytkownik ( id );
+
+ALTER TABLE rangi_uzytkownikow
+    ADD CONSTRAINT ranga_fk FOREIGN KEY ( ranga_id )
+        REFERENCES ranga ( id );
 
 ALTER TABLE uprawnienia_rang
     ADD CONSTRAINT uprawnienia_rang_ranga_fk FOREIGN KEY ( ranga_id )
@@ -210,6 +220,6 @@ ALTER TABLE sezon
         REFERENCES serial ( id );
 
 -- uprawnienia
-grant select, insert, update, delete, truncate on uzytkownik, uprawnienie, sezon, serial, rola, gatunki_filmow, uprawnienia_rang, ranga, odcinek, ocena, gatunek, film, czlowiek_kina to filmbookapi_user;
+grant select, insert, update, delete, truncate on uzytkownik, uprawnienie, sezon, serial, rola, gatunki_filmow, uprawnienia_rang, ranga, odcinek, ocena, gatunek, film, czlowiek_kina, rangi_uzytkownikow to filmbookapi_user;
 grant create on schema public to filmbookapi_user;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO filmbookapi_user;

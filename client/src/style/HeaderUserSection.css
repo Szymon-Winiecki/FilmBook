@@ -1,0 +1,46 @@
+.user-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: var(--auxiliary-background-color);
+    color: var(--auxiliary-text-primary-color);
+    border-color: var(--auxiliary-text-primary-color);
+}
+
+.user-section-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-section-avatar{
+    font-size: 20pt;
+}
+
+.user-section-name{
+    font-size: 10pt;
+}
+
+.user-section-logout, .user-section-login, .user-section-register{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 10pt;
+}
+
+.user-psectionanel-logout>i, .user-section-login>i, .user-section-register>i{
+    font-size: 20pt;
+}
+
+.user-section-logout:hover, .user-section-login:hover, .user-section-register:hover{
+    color: var(--primary-text3-color);
+}
