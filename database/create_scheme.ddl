@@ -24,7 +24,7 @@ CREATE TABLE film (
     tytul_polski            VARCHAR(512),
     tytul_orginalny         VARCHAR(512) NOT NULL,
     data_swiatowej_premiery DATE,
-    data_polskiej_premeiry  DATE,
+    data_polskiej_premiery  DATE,
     czas_trwania            INTEGER,
     opis                    TEXT,
     czlowiek_kina_id        INTEGER

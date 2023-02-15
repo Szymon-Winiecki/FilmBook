@@ -9,12 +9,14 @@ import Header from './Header';
 import Footer from './Footer';
 import HeaderUserSection from './HeaderUserSection';
 import MoviesList from './MoviesList';
+import MovieDetails from './MovieDetails'
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import UserPanel from './UserPanel';
 
 const sites = {
     MOVIES_LIST: '#movies',
+    MOVIE_DETAILS: '#movie',
     SERIES_LIST: '#series',
     LOGIN_FORM: '#login',
     REGISTER_FORM: '#register',
@@ -103,6 +105,9 @@ class App extends React.Component {
         }
         else if(this.state.site == sites.USER_PANEL){
             return <UserPanel />
+        }
+        else if(this.state.site.substring(0,7) == sites.MOVIE_DETAILS + '/'){
+            return <MovieDetails movieId={this.state.site.substring(7)}/>;
         }
         else{
             return <h1>404</h1>

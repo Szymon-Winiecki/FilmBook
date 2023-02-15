@@ -1,22 +1,28 @@
 import React from 'react';
 
 import '../style/Movie.css';
+import {extractYearFromDate} from '../helpers/helpers'
 
 class Movie extends React.Component {
 
     constructor(props){
         super(props);
 
-        let d = new Date();
-        d.setTime(Date.parse(this.props.movie.data_swiatowej_premiery));
-        const year = (!isNaN(d.getFullYear())) ? d.getFullYear() : undefined;
+        const year = extractYearFromDate(this.props.movie.data_swiatowej_premiery);
 
         this.state = { year: year };
     }
 
+    handleClick() {
+        let site = `#movie/${this.props.movie.id}`;
+        if(document.location.hash != site) {
+            document.location.hash = site;
+        }
+    }
+
     render(){
         return (
-            <div className="movie-row">
+            <div className="movie-row" onClick={() => this.handleClick()}>
                 <div className='no-field'> { this.props.movie.no }. </div>
                 <div className='title-field'> 
                     <div className='movie-title-up'>

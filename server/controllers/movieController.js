@@ -43,8 +43,8 @@ function getMovie(req, res){
 }
 
 function addMovie(req, res){
-    const query =   `insert into film(tytul_polski, tytul_orginalny, data_swiatowej_premiery, data_polskiej_premeiry, czas_trwania, opis, czlowiek_kina_id) 
-                    values('${req.body.tytul_polski}', '${req.body.tytul_orginalny}', '${req.body.data_swiatowej_premiery}', '${req.body.data_polskiej_premeiry}', ${req.body.czas_trwania}, '${req.body.opis}', ${req.body.czlowiek_kina_id}) returning *`;
+    const query =   `insert into film(tytul_polski, tytul_orginalny, data_swiatowej_premiery, data_polskiej_premiery, czas_trwania, opis, czlowiek_kina_id) 
+                    values('${req.body.tytul_polski}', '${req.body.tytul_orginalny}', '${req.body.data_swiatowej_premiery}', '${req.body.data_polskiej_premiery}', ${req.body.czas_trwania}, '${req.body.opis}', ${req.body.czlowiek_kina_id}) returning *`;
     database.query(query, (qerr, qres) => {
         if(qerr){
             console.error(qerr);
@@ -57,7 +57,7 @@ function addMovie(req, res){
 
 function updateMovie(req, res){
     const query =   `update film set 
-                    tytul_polski='${req.body.tytul_polski}', tytul_orginalny='${req.body.tytul_orginalny}', data_swiatowej_premiery='${req.body.data_swiatowej_premiery}', data_polskiej_premeiry='${req.body.data_polskiej_premeiry}', czas_trwania=${req.body.czas_trwania}, opis='${req.body.opis}', czlowiek_kina_id=${req.body.czlowiek_kina_id}
+                    tytul_polski='${req.body.tytul_polski}', tytul_orginalny='${req.body.tytul_orginalny}', data_swiatowej_premiery='${req.body.data_swiatowej_premiery}', data_polskiej_premiery='${req.body.data_polskiej_premiery}', czas_trwania=${req.body.czas_trwania}, opis='${req.body.opis}', czlowiek_kina_id=${req.body.czlowiek_kina_id}
                     where id=${req.params.id} returning *;`
     database.query(query, (qerr, qres) => {
         if(qerr){

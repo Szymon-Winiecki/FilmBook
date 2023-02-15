@@ -1,4 +1,5 @@
 const database = require('../dbconn/dbPool');
+const helpers = require('../helpers/helpers');
 
 function getAllPeople(req, res){
     const query = `select * from czlowiek_kina;`
@@ -26,7 +27,12 @@ function getPerson(req, res){
 
 function addPerson(req, res){
     const query =   `insert into czlowiek_kina(imie, nazwisko, data_urodzenia, opis) 
-                    values('${req.body.imie}', '${req.body.nazwisko}', '${req.body.data_urodzenia}', '${req.body.opis}') returning *`;
+                    values(
+                    '${helpers.esc(req.body.imie)}',
+                    '${helpers.esc(req.body.nazwisko)}',
+                    '${helpers.esc(req.body.data_urodzenia)}',
+                    '${helpers.esc(req.body.opis)}'
+                    ) returning *`;
     database.query(query, (qerr, qres) => {
         if(qerr){
             console.error(qerr);
