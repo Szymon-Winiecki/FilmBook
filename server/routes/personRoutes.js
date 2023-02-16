@@ -16,11 +16,11 @@ router.post('/', (req, res) => {
     personController.addPerson(req, res);
 });
 
-router.put('/:id', (req, res) => {
+router.post('/update/:id', (req, res) => {
     personController.updatePerson(req, res);
 });
 
-router.delete('/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     personController.deletePerson(req, res);
 });
 

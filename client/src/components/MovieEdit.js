@@ -1,10 +1,10 @@
 import React from 'react';
 
 import const_props from '../constant_properties';
-import {extractYearFromDate} from '../helpers/helpers'
-import '../style/MovieDetails.css';
+import '../style/MovieForm.css';
+import MovieForm from './MovieForm'
 
-class MovieDetails extends React.Component {
+class MovieEdit extends React.Component {
 
     constructor(props){
         super(props);
@@ -12,19 +12,20 @@ class MovieDetails extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            movie: {}
+            movie: {},
+            form: {}
         };
     }
 
     fetchMovie(){
-        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie/${this.props.movieId}`;
-        fetch(url)
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie/${this.props.movieId}`)
         .then((response) => response.json())
         .then(
             (data) => {
                 this.setState({
                     isLoaded: true,
-                    movie: data[0]
+                    movie: data[0],
+                    form: <MovieForm movie={data[0]} />,
                     });
             },
             (error) => {
@@ -36,13 +37,17 @@ class MovieDetails extends React.Component {
         );
     }
 
-    componentDidMount(){
+    update() {
         this.fetchMovie();
+    }
+
+    componentDidMount(){
+        this.update();
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.movieId !== this.props.movieId) {
-          this.fetchMovie();
+          this.update();
         }
       }
 
@@ -56,9 +61,9 @@ class MovieDetails extends React.Component {
         }
         else if (movie) {
             return (
-                <div className="movie-details-site">
-                    <h1>{movie.tytul_polski} {extractYearFromDate(movie.data_swiatowej_premiery)}</h1>
-                    <span>{movie.opis}</span>
+                <div className="movie-edit-site">
+                    <h1>Edytuj film {this.props.movieId}</h1>
+                    {this.state.form}
                 </div>
             );
         }
@@ -70,4 +75,4 @@ class MovieDetails extends React.Component {
     }
 }
 
-export default MovieDetails;
+export default MovieEdit;

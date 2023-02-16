@@ -9,18 +9,29 @@ import Header from './Header';
 import Footer from './Footer';
 import HeaderUserSection from './HeaderUserSection';
 import MoviesList from './MoviesList';
-import MovieDetails from './MovieDetails'
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import UserPanel from './UserPanel';
+import MovieDetails from './MovieDetails'
+import MovieAdd from './MovieAdd';
+import MovieEdit from './MovieEdit';
+import PersonDetails from './PersonDetails'
+import PersonAdd from './PersonAdd';
+import PersonEdit from './PersonEdit';
+
 
 const sites = {
     MOVIES_LIST: '#movies',
-    MOVIE_DETAILS: '#movie',
     SERIES_LIST: '#series',
     LOGIN_FORM: '#login',
     REGISTER_FORM: '#register',
-    USER_PANEL: '#userpanel'
+    USER_PANEL: '#userpanel',
+    MOVIE_DETAILS: '#movie',
+    MOVIE_ADD: '#add/movie',
+    MOVIE_EDIT: '#edit/movie',
+    PERSON_DETAILS: '#person',
+    PERSON_ADD: '#add/person',
+    PERSON_EDIT: '#edit/person',
 }
 
 class App extends React.Component {
@@ -108,6 +119,21 @@ class App extends React.Component {
         }
         else if(this.state.site.substring(0,7) == sites.MOVIE_DETAILS + '/'){
             return <MovieDetails movieId={this.state.site.substring(7)}/>;
+        }
+        else if(this.state.site == sites.MOVIE_ADD){
+            return <MovieAdd />;
+        }
+        else if(this.state.site.substring(0,12) == sites.MOVIE_EDIT + '/'){
+            return <MovieEdit movieId={this.state.site.substring(12)}/>;
+        }
+        else if(this.state.site.substring(0,8) == sites.PERSON_DETAILS + '/'){
+            return <PersonDetails personId={this.state.site.substring(8)}/>;
+        }
+        else if(this.state.site == sites.PERSON_ADD){
+            return <PersonAdd />;
+        }
+        else if(this.state.site.substring(0,13) == sites.PERSON_EDIT + '/'){
+            return <PersonEdit personId={this.state.site.substring(13)}/>;
         }
         else{
             return <h1>404</h1>

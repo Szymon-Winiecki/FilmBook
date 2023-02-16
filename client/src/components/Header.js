@@ -15,7 +15,7 @@ class Header extends React.Component {
     getNavBar(){
         let navs = new Array(this.props.navs.length);
         for(let i = 0; i < this.props.navs.length; ++i){
-            navs[i] = this.getNav(this.props.navs[i]);
+            navs[i] = this.getNav(this.props.navs[i], i);
         }
         return(
           <div className='header-nav-bar'>

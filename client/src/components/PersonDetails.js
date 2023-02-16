@@ -1,10 +1,9 @@
 import React from 'react';
 
 import const_props from '../constant_properties';
-import {extractYearFromDate} from '../helpers/helpers'
-import '../style/MovieDetails.css';
+import '../style/PersonDetails.css';
 
-class MovieDetails extends React.Component {
+class PersonDetails extends React.Component {
 
     constructor(props){
         super(props);
@@ -12,19 +11,18 @@ class MovieDetails extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            movie: {}
+            person: {}
         };
     }
 
-    fetchMovie(){
-        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie/${this.props.movieId}`;
-        fetch(url)
+    fetchPerson(){
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/person/${this.props.personId}`)
         .then((response) => response.json())
         .then(
             (data) => {
                 this.setState({
                     isLoaded: true,
-                    movie: data[0]
+                    person: data[0]
                     });
             },
             (error) => {
@@ -37,37 +35,37 @@ class MovieDetails extends React.Component {
     }
 
     componentDidMount(){
-        this.fetchMovie();
+        this.fetchPerson();
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.movieId !== this.props.movieId) {
-          this.fetchMovie();
+        if (prevProps.personId !== this.props.personId) {
+          this.fetchPerson();
         }
       }
 
     render(){
-        const { error, isLoaded, movie } = this.state;
+        const { error, isLoaded, person } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         }
         else if (!isLoaded) {
             return <div>Loading...</div>;
         }
-        else if (movie) {
+        else if (person) {
             return (
-                <div className="movie-details-site">
-                    <h1>{movie.tytul_polski} {extractYearFromDate(movie.data_swiatowej_premiery)}</h1>
-                    <span>{movie.opis}</span>
+                <div className="person-details-site">
+                    <h1>{person.imie} {person.nazwisko}</h1>
+                    <span>{person.opis}</span>
                 </div>
             );
         }
         else {
             return (
-                <h1>Nie ma takiego filmu</h1>
+                <h1>Nie ma takiej osoby</h1>
             );
         }
     }
 }
 
-export default MovieDetails;
+export default PersonDetails;

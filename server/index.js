@@ -31,8 +31,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(express.urlencoded());
-
 app.use('/api/users', usersRoutes);
 app.use('/api/movie', movieRoutes);
 app.use('/api/person', personRoutes);
