@@ -44,7 +44,7 @@ class MovieDetails extends React.Component {
         if (prevProps.movieId !== this.props.movieId) {
           this.fetchMovie();
         }
-      }
+    }
 
     render(){
         const { error, isLoaded, movie } = this.state;

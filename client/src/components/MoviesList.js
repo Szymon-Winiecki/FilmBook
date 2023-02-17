@@ -11,9 +11,7 @@ class MoviesList extends React.Component {
 
         this.state = {
             movies: [],
-            genres: [],
-            moviesLoaded: false,
-            genresLoaded: false
+            genres: []
         };
     }
 
@@ -75,47 +73,38 @@ class MoviesList extends React.Component {
     }
 
     render(){
-        if (this.state.moviesLoaded || this.state.genresLoaded)
-        {
-            return (
-                <div className='movies-list-site'>
-                    <h1 className='section-title'>Filmy</h1>
-                    <div className='movie-list-controlls'>
-                        <div className='list-controll'>
-                            <label htmlFor='genre-select' className='list-control-label'>Gatunek: </label>
-                            <select id='genre-select'>
-                                {this.getGenres()}
-                            </select>
-                        </div>
-                        <div className='list-controll'>
-                            <label htmlFor='sort-select' className='list-control-label'>Sortuj wg: </label>
-                            <select id='sort-select'>
-                                <option value='rate_asc'>ocena (rosnąco)</option>
-                                <option value='rate_desc'>ocena (malejąco)</option>
-                                <option value='title_asc'>tytuł (rosnąco)</option>
-                                <option value='title_desc'>tytuł (malejąco)</option>
-                            </select>
-                        </div>
+        return (
+            <div className='movies-list-site'>
+                <h1 className='section-title'>Filmy</h1>
+                <div className='movie-list-controlls'>
+                    <div className='list-controll'>
+                        <label htmlFor='genre-select' className='list-control-label'>Gatunek: </label>
+                        <select id='genre-select'>
+                            {this.getGenres()}
+                        </select>
                     </div>
-                    <div className='movies-list-container'>
-                        <div className='movies-list-header'>
-                            <div className='no-header'>lp.</div>
-                            <div className='title-header'>tytuł</div>
-                            <div className='rate-header'>ocena</div>
-                        </div>
-                        <div className="movies-list">
-                            {this.getMovies()}
-                        </div>
+                    <div className='list-controll'>
+                        <label htmlFor='sort-select' className='list-control-label'>Sortuj wg: </label>
+                        <select id='sort-select'>
+                            <option value='rate_asc'>ocena (rosnąco)</option>
+                            <option value='rate_desc'>ocena (malejąco)</option>
+                            <option value='title_asc'>tytuł (rosnąco)</option>
+                            <option value='title_desc'>tytuł (malejąco)</option>
+                        </select>
                     </div>
                 </div>
-            );
-        }
-        else
-        {
-            return (
-                <h1>Loading...</h1>
-            );
-        }
+                <div className='movies-list-container'>
+                    <div className='movies-list-header'>
+                        <div className='no-header'>lp.</div>
+                        <div className='title-header'>tytuł</div>
+                        <div className='rate-header'>ocena</div>
+                    </div>
+                    <div className="movies-list">
+                        {this.getMovies()}
+                    </div>
+                </div>
+            </div>
+        );
     }
 }
 

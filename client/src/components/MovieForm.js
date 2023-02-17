@@ -2,6 +2,7 @@ import React from 'react';
 
 import const_props from '../constant_properties';
 import '../style/MovieForm.css';
+import DirectorPicker from './DirectorPicker';
 
 class MovieForm extends React.Component {
 
@@ -9,30 +10,71 @@ class MovieForm extends React.Component {
         super(props);
 
         this.state = {
-            movieDirector: null
+            isLoaded: false,
+            movieDirector: null,
+            movieDirectorPicker: null
         };
     }
 
+    fetchDirector(directorId) {
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/person/${directorId}`;
+        fetch(url)
+        .then((response) => response.json())
+        .then(
+            (data) => {
+                this.setState({
+                    isLoaded: true,
+                    movieDirector: data[0]
+                    });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        );
+    }
+
     submit() {
-        let durationInMinutes =
-            document.querySelector('#movie-duration-h') * 60+
-            document.querySelector('#movie-duration-m')+
-            document.querySelector('#movie-duration-s') / 60;
         let movieData = {
-            'tytul_orginalny': document.querySelector('#movie-title-original'),
-            'tytul_polski': document.querySelector('#movie-title-local'),
-            'data_swiatowej_premiery': document.querySelector('#movie-release-year'),
-            'data_polskiej_premiery': document.querySelector('#movie-release-year-local'),
-            'czas_trwania': durationInMinutes,
-            'opis': document.querySelector('#movie-description'),
-            'czlowiek_kina_id': this.state.movieDirector
+            'tytul_orginalny': document.querySelector('#movie-title-original').value,
+            'tytul_polski': document.querySelector('#movie-title-local').value,
+            'data_swiatowej_premiery': document.querySelector('#movie-release-year').value,
+            'data_polskiej_premiery': document.querySelector('#movie-release-year-local').value,
+            'czas_trwania': parseInt(document.querySelector('#movie-duration-h').value) * 60 + parseInt(document.querySelector('#movie-duration-m').value),
+            'opis': document.querySelector('#movie-description').value,
+            'czlowiek_kina_id': this.state.movieDirector.id
         };
-        const response = fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/login`, {
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie/${this.props.movie ? 'update/' + this.props.movie.id : ''}`;
+        fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
                 body: JSON.stringify(movieData)
             });
+    }
+
+    componentDidMount(){
+        if (this.props.movie)
+            this.fetchDirector(this.props.movie.czlowiek_kina_id);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.movie && prevProps.movie.czlowiek_kina_id !== this.props.movie.czlowiek_kina_id) {
+          this.fetchDirector(this.props.movie.czlowiek_kina_id);
+        }
+    }
+
+    handleDirectorSelect = (director) => {
+        this.setState({
+            movieDirector: director,
+            movieDirectorPicker: null
+        });
+    }
+
+    pickDirector() {
+        this.setState({movieDirectorPicker : <DirectorPicker onSelectDirector={this.handleDirectorSelect} />});
     }
 
     render(){
@@ -64,9 +106,10 @@ class MovieForm extends React.Component {
 
                 <div>
                     <label htmlFor="movie-duration-h">Czas trwania:</label>
-                    <input type="number" id="movie-duration-h" /><span> godz. </span>
-                    <input type="number" id="movie-duration-m" /><span> min. </span>
-                    <input type="number" id="movie-duration-s" /><span> sec.</span>
+                    <input type="number" id="movie-duration-h" key={this.props.movie ? this.props.movie.id : "1"}
+                        defaultValue={this.props.movie ? Math.floor(this.props.movie.czas_trwania / 60) : 0} /><span> godz. </span>
+                    <input type="number" id="movie-duration-m" key={this.props.movie ? -this.props.movie.id : "2"}
+                        defaultValue={this.props.movie ? this.props.movie.czas_trwania - (60 * Math.floor(this.props.movie.czas_trwania / 60)) : 0}/><span> min. </span>
                 </div>
 
                 <div>
@@ -75,9 +118,21 @@ class MovieForm extends React.Component {
                         defaultValue={this.props.movie ? this.props.movie.opis : null}></textarea>
                 </div>
 
-                <p>
-                    <label htmlFor="">Reżyseria:</label>
-                </p>
+                <div>
+                    <label htmlFor="movie-director">Reżyseria:</label>
+                    <span id="movie-director" key={this.props.movie ? this.props.movie.id : ""}>
+                        {this.state.movieDirector ? `${this.state.movieDirector.imie} ${this.state.movieDirector.nazwisko}` : ""}
+                    </span>
+                    <input type="Button" defaultValue="Wybierz" onClick={() => this.pickDirector()}></input>
+                </div>
+                
+                <div>
+                    {this.state.movieDirectorPicker}
+                </div>
+
+                <div>
+                    <input id='movie-form-submit-button' type="button" value={this.props.movie ? 'Aktualizuj' : 'Dodaj'} onClick={() => this.submit()}></input>
+                </div>
             </div>
         );
     }

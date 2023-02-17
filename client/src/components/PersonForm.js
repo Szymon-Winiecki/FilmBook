@@ -52,7 +52,9 @@ class PersonForm extends React.Component {
                         defaultValue={this.props.person ? this.props.person.opis : ""}></textarea>
                 </div>
                 
-                <input id='person-form-submit-button' type="button" value={this.props.person ? 'Aktualizuj' : 'Dodaj'} onClick={() => this.submit()}></input>
+                <div>
+                    <input id='person-form-submit-button' type="button" value={this.props.person ? 'Aktualizuj' : 'Dodaj'} onClick={() => this.submit()}></input>
+                </div>
             </div>
         );
     }
