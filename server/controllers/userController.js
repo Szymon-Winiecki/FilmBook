@@ -5,7 +5,15 @@ const usersRanksTableInfo = require('../database_info/usersRanksTableInfo');
 const ranksTableInfo = require('../database_info/ranksTableInfo');
 
 function getAllUsers(req, res){
-    res.status(200).json( {function: 'get all users'} );
+    const query = `select id, nazwa, email from uzytkownik;`;
+    database.query(query, (qerr, qres) => {
+        if(qerr){
+            console.error(qerr);
+            console.error(query);
+            return res.sendStatus(500);
+        }
+        res.status(200).json(qres.rows);
+    });
 }
 
 function getUser(req, res){

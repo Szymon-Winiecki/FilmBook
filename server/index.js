@@ -7,7 +7,7 @@ var path = require('path');
 const corsOptions = require('./conf/corsOptions');
 const credentials = require('./middleware/credentials');
 
-const usersRoutes = require('./routes/usersRoutes.js');
+const userRoutes = require('./routes/userRoutes.js');
 const movieRoutes = require('./routes/movieRoutes.js');
 const personRoutes = require('./routes/personRoutes.js');
 const genreRoutes = require('./routes/genreRoutes.js');
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api/users', usersRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/movie', movieRoutes);
 app.use('/api/person', personRoutes);
 app.use('/api/genre', genreRoutes);

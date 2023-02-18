@@ -18,6 +18,7 @@ import MovieEdit from './MovieEdit';
 import PersonDetails from './PersonDetails'
 import PersonAdd from './PersonAdd';
 import PersonEdit from './PersonEdit';
+import UsersList from './UsersList';
 
 
 const sites = {
@@ -32,6 +33,7 @@ const sites = {
     PERSON_DETAILS: '#person',
     PERSON_ADD: '#add/person',
     PERSON_EDIT: '#edit/person',
+    USERS_LIST: '#users',
 }
 
 class App extends React.Component {
@@ -134,6 +136,9 @@ class App extends React.Component {
         }
         else if(this.state.site.substring(0,13) == sites.PERSON_EDIT + '/'){
             return <PersonEdit personId={this.state.site.substring(13)}/>;
+        }
+        else if(this.state.site == sites.USERS_LIST){
+            return <UsersList />;
         }
         else{
             return <h1>404</h1>

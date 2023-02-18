@@ -5,7 +5,7 @@ const router = express.Router()
 const authentication = require('../middleware/authenticateWithJWT');
 const authorization = require('../middleware/authorize');
 
-const usersController = require('../controllers/usersController');
+const usersController = require('../controllers/userController');
 
 //get ranks of specific user
 router.get('/ranks/:id', authentication, authorization('show_user_rank'), usersController.getUserRanks);

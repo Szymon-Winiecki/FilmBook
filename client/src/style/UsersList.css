@@ -1,0 +1,37 @@
+.users-list-site{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.users-list-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.users-list-header{
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 1fr;
+
+    width: 100%;
+    height: 30px;
+
+    background-color: var(--elem-primary-color);
+}
+
+.users-list{
+    width: 100%;
+}
