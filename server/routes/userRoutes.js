@@ -13,6 +13,9 @@ router.get('/ranks/:id', authentication, authorization('show_user_rank'), usersC
 //get your own ranks
 router.get('/ranks/', authentication, usersController.getOwnRanks);
 
+//change your own password
+router.put('/changepassword', authentication, usersController.changeOwnPassword);
+
 router.get('/', (req, res) => {
     usersController.getAllUsers(req, res);
 });
