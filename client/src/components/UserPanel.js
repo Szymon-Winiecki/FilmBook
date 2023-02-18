@@ -14,7 +14,7 @@ class UserPanel extends React.Component {
     async fetchUserRanks(user){
         console.log(user.accessToken);
         try{
-            const response = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/users/ranks`, {
+            const response = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/user/ranks`, {
                 method: 'GET',
                 headers: {
                     Authentication: `Bearer ${user.accessToken}` 

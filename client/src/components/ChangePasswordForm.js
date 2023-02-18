@@ -45,7 +45,7 @@ class ChangePasswordForm extends React.Component {
         }
 
         try{
-            const response = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/users/changepassword`, {
+            const response = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/user/changepassword`, {
                 method: 'PUT',
                 headers: { 
                     'Content-Type': 'application/json',
