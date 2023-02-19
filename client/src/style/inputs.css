@@ -1,5 +1,5 @@
 
-input[type="text"].s-input, input[type="password"].s-input, input[type="date"].s-input, input[type="tel"].s-input, input[type="email"].s-input{
+input[type="text"].s-input, input[type="password"].s-input, input[type="date"].s-input, input[type="tel"].s-input, input[type="email"].s-input, input[type="number"].s-input{
     background-color: var(--main-background-tint-color);
 
     border-style: solid;
@@ -8,7 +8,7 @@ input[type="text"].s-input, input[type="password"].s-input, input[type="date"].s
     padding: 0 4px 0 4px;
 }
 
-input[type="text"].s-input:focus-visible, input[type='password'].s-input:focus-visible, input[type="date"].s-input:focus-visible, input[type="tel"].s-input:focus-visible, input[type="email"].s-input:focus-visible{
+input[type="text"].s-input:focus-visible, input[type='password'].s-input:focus-visible, input[type="date"].s-input:focus-visible, input[type="tel"].s-input:focus-visible, input[type="email"].s-input:focus-visible, input[type="number"].s-input:focus-visible{
     outline: none;
 }
 
