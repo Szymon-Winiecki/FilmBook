@@ -1,6 +1,7 @@
 import React from 'react';
 
 import const_props from '../constant_properties';
+import { UserContext } from '../constant_properties';
 import '../style/RankForm.css';
 import PermissionPicker from './PermissionPicker';
 
@@ -16,9 +17,16 @@ class RankForm extends React.Component {
         };
     }
 
-    fetchOwnPermissions() {
+    fetchRankPermissions() {
         let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/permission/${this.props.rank.id}`;
-        fetch(url)
+        fetch(url, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include',
+        })
         .then((response) => response.json())
         .then(
             (data) => {
@@ -41,10 +49,13 @@ class RankForm extends React.Component {
             'nazwa': document.querySelector('#rank-name').value,
             'uprawnienia': this.state.rankPermissions.map((elem) => elem.nazwa)
         };
-        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank/${this.props.rank ? 'update/' + this.props.rank.id : ''}`;
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank/${this.props.rank ? '/' + this.props.rank.id : ''}`;
         fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: this.props.rank ? 'PUT' : 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authentication: `Bearer ${this.context.accessToken}`
+                },
                 credentials: 'include',
                 body: JSON.stringify(rankData)
             });
@@ -52,12 +63,12 @@ class RankForm extends React.Component {
 
     componentDidMount(){
         if (this.props.rank)
-            this.fetchOwnPermissions();
+            this.fetchRankPermissions();
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.rank && prevProps.rank.id !== this.props.rank.id) {
-          this.fetchOwnPermissions();
+          this.fetchRankPermissions();
         }
     }
 
@@ -126,5 +137,6 @@ class RankForm extends React.Component {
         );
     }
 }
+RankForm.contextType = UserContext;
 
 export default RankForm;

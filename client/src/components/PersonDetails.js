@@ -1,6 +1,6 @@
 import React from 'react';
 
-import const_props from '../constant_properties';
+import const_props, { UserContext } from '../constant_properties';
 import '../style/PersonDetails.css';
 
 class PersonDetails extends React.Component {
@@ -35,10 +35,13 @@ class PersonDetails extends React.Component {
     }
 
     deletePerson() {
-        const url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/person/delete/${this.props.personId}`;
+        const url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/person/${this.props.personId}`;
         fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
             credentials: 'include'
         })
         .then((response) => {
@@ -93,5 +96,6 @@ class PersonDetails extends React.Component {
         }
     }
 }
+PersonDetails.contextType = UserContext;
 
 export default PersonDetails;

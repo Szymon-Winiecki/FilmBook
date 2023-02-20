@@ -1,6 +1,6 @@
 import React from 'react';
 
-import const_props from '../constant_properties';
+import const_props, { UserContext } from '../constant_properties';
 import '../style/PersonForm.css';
 
 class PersonForm extends React.Component {
@@ -16,10 +16,13 @@ class PersonForm extends React.Component {
             'data_urodzenia': document.querySelector('#person-date-of-birth').value,
             'opis': document.querySelector('#person-description').value
         };
-        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/person/${this.props.person ? 'update/' + this.props.person.id : ''}`;
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/person/${this.props.person ? '/' + this.props.person.id : ''}`;
         fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: this.props.person ? 'PUT' : 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authentication: `Bearer ${this.context.accessToken}`
+                },
                 credentials: 'include',
                 body: JSON.stringify(personData)
             });
@@ -59,5 +62,6 @@ class PersonForm extends React.Component {
         );
     }
 }
+PersonForm.contextType = UserContext;
 
 export default PersonForm;

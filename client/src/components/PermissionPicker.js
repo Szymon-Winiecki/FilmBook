@@ -1,6 +1,7 @@
 import React from 'react';
 
 import const_props from '../constant_properties';
+import { UserContext } from '../constant_properties';
 import '../style/PermissionPicker.css';
 
 class PermissionPicker extends React.Component {
@@ -19,7 +20,14 @@ class PermissionPicker extends React.Component {
 
     fetchAllPermissions() {
         let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/permission`;
-        fetch(url)
+        fetch(url, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include'
+        })
         .then((response) => response.json())
         .then(
             (data) => {
@@ -64,5 +72,6 @@ class PermissionPicker extends React.Component {
         );
     }
 }
+PermissionPicker.contextType = UserContext;
 
 export default PermissionPicker;

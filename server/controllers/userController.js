@@ -49,18 +49,15 @@ function deleteUser(req, res){
 }
 
 function getOwnPermissions(req, res){
-    const query = ``;
+    const query = `select uprawnienie_nazwa from uprawnienia_rang ur join
+        uzytkownik u on ur.ranga_id = u.ranga_id where u.id = ${req.user.id}`;
     database.query(query, (qerr, qres) => {
         if(qerr){
             console.error(qerr);
             console.error(query);
             return res.sendStatus(500);
         }
-        if(qres.rowCount == 0){
-            return res.sendStatus(404);
-        }
-        const ranks = qres.rows.map((row) => {return row[ranksTableInfo.nameField];});
-        res.status(200).json(ranks);
+        res.status(200).json(qres.rows);
     })
 }
 

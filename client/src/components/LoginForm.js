@@ -53,7 +53,7 @@ class LoginForm extends React.Component {
             else{
                 const data = await response.json();
 
-                const res = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/permission/${data.rankId}`, {
+                const res = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/user/permissions`, {
                     method: 'GET',
                     headers: { 
                         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ class LoginForm extends React.Component {
                     credentials: 'include'
                 });
                 let permissions = await res.json();
-                permissions = permissions.map(perm => perm.nazwa);
+                permissions = permissions.map(perm => perm.uprawnienie_nazwa);
 
                 this.props.onUserLoggedIn(userData.username, data.accessToken, permissions);
             }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import const_props from '../constant_properties';
+import const_props, { UserContext } from '../constant_properties';
 import '../style/User.css';
 
 class User extends React.Component {
@@ -28,7 +28,10 @@ class User extends React.Component {
         let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/user/updateRank/${this.props.user.id}`;
         fetch(url, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authentication: `Bearer ${this.context.accessToken}`
+                },
                 credentials: 'include',
                 body: JSON.stringify({rankId: selected.target.value})
             });
@@ -59,5 +62,6 @@ class User extends React.Component {
         );
     }
 }
+User.contextType = UserContext;
 
 export default User;
