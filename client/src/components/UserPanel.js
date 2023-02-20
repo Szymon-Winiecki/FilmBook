@@ -38,14 +38,17 @@ class UserPanel extends React.Component {
                         </div>
                     </div>
                  {/* : ''} */}
-                {this.context?.permissions?.includes('can-see-users') ? 
                     <div className='user-panel'>
                         <h2>Panel administratora</h2>
+                        {this.context?.permissions?.includes('can-see-users') ? 
+                            <div className='user-panel-section'> 
+                                <input type='button' value='zarządzaj użytkownikami' className='s-input' onClick={() => {this.changeSite('#users')}}/>
+                            </div>
+                        : ''}
                         <div className='user-panel-section'> 
-                            <input type='button' value='zarządzaj użytkownikami' className='s-input' onClick={() => {this.changeSite('#users')}}/>
+                            <input type='button' value='zarządzaj rangami' className='s-input' onClick={() => {this.changeSite('#ranks')}}/>
                         </div>
                     </div>
-                 : ''}
             </div>
         );
     }

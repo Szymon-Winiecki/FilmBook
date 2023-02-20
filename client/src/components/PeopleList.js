@@ -17,7 +17,7 @@ class PeopleList extends React.Component {
 
     getPerson(person){
         return (
-            <Person person={person} />
+            <Person person={person} key={person.id}/>
         );
     }
 
@@ -65,8 +65,8 @@ class PeopleList extends React.Component {
                 <div className='people-list-container'>
                     <div className='people-list-header'>
                         <div className='no-header'>lp.</div>
-                        <div className='title-header'>Imie</div>
-                        <div className='rate-header'>Nazwisko</div>
+                        <div className='first-name-header'>Imie</div>
+                        <div className='last-name-header'>Nazwisko</div>
                     </div>
                     <div className="people-list">
                         {this.getPeople()}
