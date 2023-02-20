@@ -9,6 +9,7 @@ import Header from './Header';
 import Footer from './Footer';
 import HeaderUserSection from './HeaderUserSection';
 import MoviesList from './MoviesList';
+import PeopleList from './PeopleList';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import UserPanel from './UserPanel';
@@ -118,6 +119,9 @@ class App extends React.Component {
     getCurrentSite(){
         if(this.state.site == sites.MOVIES_LIST){
             return <MoviesList />;
+        }
+        else if(this.state.site == sites.PEOPLE_LIST){
+            return <PeopleList />;
         }
         else if(this.state.site == sites.LOGIN_FORM){
             return <LoginForm onRegister={() => this.changeSite(sites.REGISTER_FORM)} onUserLoggedIn={(username, accessToken, permissions) => { this.changeUser(username, accessToken, permissions); this.changeSite(sites.MOVIES_LIST); }}/>;
