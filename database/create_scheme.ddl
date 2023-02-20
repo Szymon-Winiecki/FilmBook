@@ -219,7 +219,27 @@ ALTER TABLE sezon
         REFERENCES serial ( id );
 
 -- uprawnienia aplikacji
-insert into uprawnienie values ('can-see-users');
+insert into uprawnienie values ('add_movie', 'dodawanie filmu');
+insert into uprawnienie values ('alter_movie', 'edytowanie filmu');
+insert into uprawnienie values ('delete_movie', 'usuwanie filmu');
+insert into uprawnienie values ('add_person', 'dodawanie osoby');
+insert into uprawnienie values ('alter_person', 'edytowanie osoby');
+insert into uprawnienie values ('delete_person', 'usuwanie osoby');
+insert into uprawnienie values ('get_ranks', 'pobieranie wszystkich rang');
+insert into uprawnienie values ('get_rank', 'pobieranie wybranej rangi');
+insert into uprawnienie values ('add_rank', 'dodawanie rangi');
+insert into uprawnienie values ('alter_rank', 'edytowanie rangi');
+insert into uprawnienie values ('delete_rank', 'usuwanie rangi');
+insert into uprawnienie values ('get_permissions', 'pobieranie wszystkich uprawnien');
+insert into uprawnienie values ('get_rank_permissions', 'pobieranie uprawnien dla wybranej rangi');
+insert into uprawnienie values ('get_users', 'pobieranie wszystkich uzytkownikow');
+insert into uprawnienie values ('get_user', 'pobieranie wybranego uzytkownika');
+insert into uprawnienie values ('alter_user_rank', 'zmienianie rangi uzytkownika');
+insert into uprawnienie values ('delete_user', 'usuwanie uzytkownika');
+insert into uprawnienie values ('add_genre', 'dodawanie gatunku');
+insert into uprawnienie values ('alter_genre', 'edytowanie gatunku');
+insert into uprawnienie values ('delete_genre', 'usuwanie gatunku');
+
 
 -- uprawnienia do bazy danych
 grant select, insert, update, delete, truncate on uzytkownik, uprawnienie, sezon, serial, rola, gatunki_filmow, uprawnienia_rang, ranga, odcinek, ocena, gatunek, film, czlowiek_kina to filmbookapi_user;

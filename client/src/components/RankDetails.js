@@ -1,6 +1,7 @@
 import React from 'react';
 
 import const_props from '../constant_properties';
+import { UserContext } from '../constant_properties';
 import '../style/RankDetails.css';
 
 class RankDetails extends React.Component {
@@ -18,7 +19,14 @@ class RankDetails extends React.Component {
     }
 
     fetchRank(){
-        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank/${this.props.rankId}`)
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank/${this.props.rankId}`, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include',
+        })
         .then((response) => response.json())
         .then(
             (data) => {
@@ -36,9 +44,16 @@ class RankDetails extends React.Component {
         );
     }
 
-    fetchOwnPermissions() {
+    fetchRankPermissions() {
         let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/permission/${this.props.rankId}`;
-        fetch(url)
+        fetch(url, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include',
+        })
         .then((response) => response.json())
         .then(
             (data) => {
@@ -58,13 +73,13 @@ class RankDetails extends React.Component {
 
     componentDidMount(){
         this.fetchRank();
-        this.fetchOwnPermissions();
+        this.fetchRankPermissions();
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.rankId !== this.props.rankId) {
           this.fetchRank();
-          this.fetchOwnPermissions();
+          this.fetchRankPermissions();
         }
     }
 
@@ -103,5 +118,6 @@ class RankDetails extends React.Component {
         }
     }
 }
+RankDetails.contextType = UserContext;
 
 export default RankDetails;

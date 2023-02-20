@@ -1,6 +1,6 @@
 import React from 'react';
 
-import const_props from '../constant_properties';
+import const_props, { UserContext } from '../constant_properties';
 import RankForm from './RankForm'
 
 class RankEdit extends React.Component {
@@ -17,7 +17,14 @@ class RankEdit extends React.Component {
     }
 
     fetchRank(){
-        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank/${this.props.rankId}`)
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank/${this.props.rankId}`, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include'
+        })
         .then((response) => response.json())
         .then(
             (data) => {
@@ -73,5 +80,6 @@ class RankEdit extends React.Component {
         }
     }
 }
+RankEdit.contextType = UserContext;
 
 export default RankEdit;

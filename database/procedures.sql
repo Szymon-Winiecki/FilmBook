@@ -30,12 +30,14 @@ language plpgsql
 as $$
 declare
 	_c integer;
+	_user_rank ranga.id%type;
 begin
-   	select into _c count(*) from uzytkownik u 
-					join rangi_uzytkownikow ru on u.id = ru.uzytkownik_id 
-					join ranga r on ru.ranga_id = r.id 
-					join uprawnienia_rang ur on r.id = ur.ranga_id
-			where u.id = user_id and ur.uprawnienie_nazwa = permission_name;
+	select into _user_rank ranga_id  from uzytkownik
+	where id = user_id;
+
+   	select into _c count(*)
+	from uprawnienia_rang
+	where ranga_id=_user_rank and uprawnienie_nazwa = permission_name;
 			
 	if _c > 0 then
 		return true;
@@ -44,32 +46,17 @@ begin
 	end if;
 end;$$;
 
-
---nadanie uprawnień rangom
-
+--nadanie uprawnień randze Admin
 do
 $$
 declare
 	_permission uprawnienie.nazwa%type;
 begin
-	for _permission in select nazwa from uprawnienie where nazwa like 'show_%' loop
-		call nadaj_uprawnienie('User', _permission);
-		call nadaj_uprawnienie('Editor', _permission);
-	end loop;
-	
-	for _permission in select nazwa from uprawnienie where nazwa like 'add_%' or nazwa like 'alter_%' or nazwa like 'delete_%' loop
-		call nadaj_uprawnienie('Editor', _permission);
-	end loop;
-	
 	for _permission in select nazwa from uprawnienie loop
-		call nadaj_uprawnienie('Admin', _permission);
+		call nadaj_uprawnienie(1, _permission);
 	end loop;
 end
 $$;
-
-
-
-
 
 create or replace function update_avg_rate()
 returns trigger

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import const_props from '../constant_properties';
+import const_props, { UserContext } from '../constant_properties';
 import '../style/UsersList.css';
 import User from './User'
 
@@ -18,7 +18,16 @@ class UsersList extends React.Component {
     }
 
     fetchUsers(){
-        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/user`).then((response) => response.json()).then((data) => {
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/user`, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include'
+        })
+        .then((response) => response.json())
+        .then((data) => {
             this.setState({
                 users: data,
                 usersLoaded: true
@@ -27,7 +36,14 @@ class UsersList extends React.Component {
     }
 
     fetchRanks(){
-        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank/`)
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank/`, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include'
+        })
         .then((response) => response.json())
         .then(
             (data) => {
@@ -105,5 +121,6 @@ class UsersList extends React.Component {
         
     }
 }
+UsersList.contextType = UserContext;
 
 export default UsersList;

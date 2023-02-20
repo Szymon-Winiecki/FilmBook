@@ -1,6 +1,7 @@
 import React from 'react';
 
 import const_props from '../constant_properties';
+import { UserContext } from '../constant_properties';
 import Rank from './Rank'
 import '../style/RanksList.css';
 
@@ -35,7 +36,16 @@ class RanksList extends React.Component {
     }
 
     fetchRanks(){
-        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank`).then((response) => response.json()).then((data) => {
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank`, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include'
+        })
+        .then((response) => response.json())
+        .then((data) => {
             this.setState({
                 ranks: data,
                 ranksLoaded: true
@@ -73,5 +83,6 @@ class RanksList extends React.Component {
         );
     }
 }
+RanksList.contextType = UserContext;
 
 export default RanksList;
