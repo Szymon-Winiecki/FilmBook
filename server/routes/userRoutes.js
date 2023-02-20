@@ -29,6 +29,10 @@ router.put('/:id', (req, res) => {
     usersController.updateUser(req, res);
 });
 
+router.put('/updateRank/:id', (req, res) => {
+    usersController.updateUserRank(req, res);
+});
+
 router.delete('/:id', (req, res) => {
     usersController.deleteUser(req, res);
 });

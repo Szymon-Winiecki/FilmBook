@@ -8,7 +8,8 @@ const ranksTableInfo = require('../database_info/ranksTableInfo');
 const schemas = require('../validation/authenticationSchemas');
 
 function getAllUsers(req, res){
-    const query = `select id, nazwa, email, ranga_id from uzytkownik;`;
+    const query = `select u.id as id, u.nazwa as nazwa, email, r.nazwa as ranga_nazwa, r.id as ranga_id
+        from uzytkownik u join ranga r on u.ranga_id = r.id;`;
     database.query(query, (qerr, qres) => {
         if(qerr){
             console.error(qerr);
@@ -29,6 +30,18 @@ function addUser(req, res){
 
 function updateUser(req, res){
     res.status(200).json( {function: 'update user'} );
+}
+
+function updateUserRank(req, res){
+    const query = `update uzytkownik set ranga_id = ${req.body.rankId} where id = ${req.params.id};`;
+    database.query(query, (qerr, qres) => {
+        if(qerr){
+            console.error(qerr);
+            console.error(query);
+            return res.sendStatus(500);
+        }
+        res.sendStatus(200);
+    });
 }
 
 function deleteUser(req, res){
@@ -123,6 +136,7 @@ module.exports = {
     getUser,
     addUser,
     updateUser,
+    updateUserRank,
     deleteUser,
     getOwnPermissions,
     changeOwnPassword

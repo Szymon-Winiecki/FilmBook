@@ -1,5 +1,6 @@
 import React from 'react';
 
+import const_props from '../constant_properties';
 import '../style/User.css';
 
 class User extends React.Component {
@@ -8,6 +9,29 @@ class User extends React.Component {
         super(props);
 
         this.state = { };
+    }
+
+    getOtherRanks(rankId) {
+        let rankOptions = [];
+        this.props.ranks.forEach(rank => {
+            if (rank.id !== rankId) {
+                rankOptions.push(
+                    <option key={rank.id} value={rank.id}>{rank.nazwa}</option>
+                )
+            }
+        });
+        return rankOptions;
+    }
+
+    changeRank(selected)
+    {
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/user/updateRank/${this.props.user.id}`;
+        fetch(url, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({rankId: selected.target.value})
+            });
     }
 
     render(){
@@ -25,8 +49,11 @@ class User extends React.Component {
                     <span className='user-email'>{ this.props.user.email }</span>
                 </div>
 
-                <div className='rank-field'> 
-                    <span className='user-rank'>{ "ranga użytkownika" }</span>
+                <div className='rank-field'>
+                    <select onChange={(selected) => this.changeRank(selected)}>
+                        <option key={this.props.user.ranga_id} value={this.props.user.ranga_id}>{this.props.user.ranga_nazwa}</option>
+                        {this.getOtherRanks(this.props.user.ranga_id)}
+                    </select>
                 </div>
             </div>
         );

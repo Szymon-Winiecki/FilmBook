@@ -73,7 +73,7 @@ ALTER TABLE odcinek ADD CONSTRAINT odcinek_pk PRIMARY KEY ( id );
 
 CREATE TABLE ranga (
     id            SERIAL NOT NULL,
-    nazwa         VARCHAR(256) NOT NULL,
+    nazwa         VARCHAR(256) NOT NULL
 );
 
 ALTER TABLE ranga ADD CONSTRAINT ranga_pk PRIMARY KEY ( id );
