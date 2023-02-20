@@ -47,10 +47,17 @@ class PeopleList extends React.Component {
         this.fetchPeople();
     }
 
+    changeSite(site) {
+        if(document.location.hash != site) {
+            document.location.hash = site;
+        }
+    }
+
     render(){
         return (
             <div className='people-list-site'>
                 <h1 className='section-title'>Ludzie kina</h1>
+                <input type='button' value='Dodaj osobę' className='s-input' onClick={() => {this.changeSite('#add/person')}}/>
                 <div className='person-list-controlls'>
                     <div className='list-controll'>
                         <label htmlFor='sort-select' className='list-control-label'>Sortuj wg: </label>

@@ -34,6 +34,24 @@ class PersonDetails extends React.Component {
         );
     }
 
+    deletePerson() {
+        const url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/person/delete/${this.props.personId}`;
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        })
+        .then((response) => {
+            if (response.status == 500)
+                console.log("nie mozna uzunac osoby");
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+        this.changeSite('#people');
+    }
+
     componentDidMount(){
         this.fetchPerson();
     }
@@ -42,7 +60,13 @@ class PersonDetails extends React.Component {
         if (prevProps.personId !== this.props.personId) {
           this.fetchPerson();
         }
-      }
+    }
+
+    changeSite(site) {
+        if(document.location.hash != site) {
+            document.location.hash = site;
+        }
+    }
 
     render(){
         const { error, isLoaded, person } = this.state;
@@ -57,6 +81,8 @@ class PersonDetails extends React.Component {
                 <div className="person-details-site">
                     <h1>{person.imie} {person.nazwisko}</h1>
                     <span>{person.opis}</span>
+                    <input type='button' value='Edytuj osobę' className='s-input' onClick={() => {this.changeSite(`#edit/person/${person.id}`)}}/>
+                    <input type='button' value='Usuń osobę' className='s-input' onClick={() => this.deletePerson()}/>
                 </div>
             );
         }
