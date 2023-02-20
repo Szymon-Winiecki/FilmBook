@@ -59,6 +59,94 @@ class GenresPicker extends React.Component {
         this.props.onChange(Array.from(this.state.selected));
     }
 
+    addNewGenre(){
+        const user = this.context;
+        if(!user || !user.accessToken) return;
+
+        let genreData = {
+            nazwa: document.getElementById('new-genre-name').value,
+        };
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/genre`;
+        fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authentication: `Bearer ${user.accessToken}`
+                },
+                credentials: 'include',
+                body: JSON.stringify(genreData)
+        })
+        .then((response) => response.status)
+        .then(
+            (status) => {
+                if(status >= 200 && status <= 299){
+                    document.getElementById('new-genre-name').value = '';
+                    this.fetchAllGenres();
+                    this.setState({
+                        error: undefined
+                    });
+                }
+                else{
+                    this.setState({
+                        error: 'Nie udało się dodać nowego gatunku'
+                    });
+                    console.log('Nie udało się dodać nowego gatunku ', status);
+                }
+            },
+            (error) => {
+                console.log(error);
+                this.setState({
+                    error: 'Nie udało się dodać nowego gatunku'
+                });
+            }
+        );
+    }
+
+    deleteGenre(genre){
+        const user = this.context;
+        if(!user || !user.accessToken) return;
+
+
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/genre/${genre.id}`;
+        fetch(url, {
+                method: 'DELETE',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authentication: `Bearer ${user.accessToken}`
+                },
+                credentials: 'include'
+        })
+        .then((response) => response.status)
+        .then(
+            (status) => {
+                if(status >= 200 && status <= 299){
+                    if(genre.selected) this.toggleSelection(genre);
+                    this.fetchAllGenres();
+                    this.setState({
+                        error: undefined
+                    });
+                }
+                else if(status == 409){
+                    this.setState({
+                        error: 'Gatunek jest używany, nie można go usunąć'
+                    });
+                }
+                else{
+                    this.setState({
+                        error: 'Nie udało sie usunąć gatunku'
+                    });
+                    console.log('Nie udało sie usunąć gatunku ', status);
+                }
+            },
+            (error) => {
+                console.log(error);
+                this.setState({
+                    error: 'Nie udało sie usunąć gatunku'
+                });
+            }
+        );
+    }
+
     getGenres() {
         let genresElems = [];
         this.state.genres.forEach(genre => {
@@ -66,6 +154,7 @@ class GenresPicker extends React.Component {
                 <div key={genre.id} className='picker-list-row' onClick={() => this.toggleSelection(genre)}>
                     <i className={genre.selected ? 'bi bi-check-circle-fill' : 'bi bi-circle'}></i>
                     <span className='picker-row-label'>{genre.nazwa}</span>
+                    <i className="bi bi-x-circle" onClick={(e) => {e.stopPropagation(); this.deleteGenre(genre)}}></i>
                 </div>
             );
         });
@@ -77,6 +166,13 @@ class GenresPicker extends React.Component {
             <div className='genres-picker'>
                 <div className='picker-list'>
                     {this.getGenres()}
+                </div>
+                <div className='picker-add-option'>
+                    <input id='new-genre-name' type='text' className='s-input' placeholder='nowy gatunek'/>
+                    <i className="bi bi-plus-circle" onClick={() => this.addNewGenre()}></i>
+                </div>
+                <div className='picker-errors'>
+                    {this.state.error}
                 </div>
             </div>
         );

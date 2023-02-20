@@ -1,4 +1,6 @@
 .genres-picker{
+    width: 30%;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
 }
@@ -20,4 +22,24 @@
 
 .picker-list-row:hover{
    background-color: var(--main-background-tint-color);
+}
+
+.picker-list-row>i.bi-x-circle:hover:before{
+    content: '\F622';
+    color: var(--main-text-error-color);
+}
+
+.picker-add-option{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.picker-add-option>i.bi-plus-circle:hover::before{
+    content: '\F4F9';
+}
+
+.picker-errors{
+    width: 300px;
+    color: var(--main-text-error-color);
 }

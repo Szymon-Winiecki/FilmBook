@@ -90,6 +90,11 @@ function deleteGenre(req, res){
         if(qerr){
             console.error(qerr);
             console.error(query);
+
+            if(qerr.code = '23503'){
+                return res.sendStatus(409);
+            }
+            
             return res.sendStatus(500);
         }
         res.status(200).json(qres.rows);
