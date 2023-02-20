@@ -3,29 +3,16 @@ const express = require('express')
 const router = express.Router()
 
 const movieController = require('../controllers/movieController');
+const authentication = require('../middleware/authenticateWithJWT');
 
-// router.get('/', movieController.moviesView);
-// router.get('/movie/:id', movieController.movieView);
-// router.get('/addmovie', movieController.addMovieView);
+router.get('/', movieController.getAllMovies);
 
-router.get('/', (req, res) => {
-    movieController.getAllMovies(req, res);
-});
+router.get('/:id', movieController.getMovie);
 
-router.get('/:id', (req, res) => {
-    movieController.getMovie(req, res);
-});
+router.post('/', authentication, movieController.addMovie);
 
-router.post('/', (req, res) => {
-    movieController.addMovie(req, res);
-});
+router.put('/:id', authentication, movieController.updateMovie);
 
-router.post('/update/:id', (req, res) => {
-    movieController.updateMovie(req, res);
-});
-
-router.post('/delete/:id', (req, res) => {
-    movieController.deleteMovie(req, res);
-});
+router.delete('/:id', authentication, movieController.deleteMovie);
 
 module.exports = router;

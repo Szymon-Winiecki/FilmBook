@@ -1,5 +1,5 @@
 
-input[type="text"].s-input, input[type="password"].s-input, input[type="date"].s-input, input[type="tel"].s-input, input[type="email"].s-input, input[type="number"].s-input{
+input[type="text"].s-input, input[type="password"].s-input, input[type="date"].s-input, input[type="tel"].s-input, input[type="email"].s-input, input[type="number"].s-input, textarea{
     background-color: var(--main-background-tint-color);
 
     border-style: solid;

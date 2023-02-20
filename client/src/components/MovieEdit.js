@@ -1,8 +1,9 @@
 import React from 'react';
 
 import const_props from '../constant_properties';
-import '../style/MovieForm.css';
 import MovieForm from './MovieForm'
+
+import '../style/MovieEdit.css';
 
 class MovieEdit extends React.Component {
 
@@ -62,7 +63,7 @@ class MovieEdit extends React.Component {
         else if (movie) {
             return (
                 <div className="movie-edit-site">
-                    <h1>Edytuj film {this.props.movieId}</h1>
+                    <h1>Edytuj informacje o filmie</h1>
                     {this.state.form}
                 </div>
             );
