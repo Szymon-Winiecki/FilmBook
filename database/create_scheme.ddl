@@ -218,7 +218,10 @@ ALTER TABLE sezon
     ADD CONSTRAINT sezon_serial_fk FOREIGN KEY ( serial_id )
         REFERENCES serial ( id );
 
--- uprawnienia
+-- uprawnienia aplikacji
+insert into uprawnienie values ('can-see-users');
+
+-- uprawnienia do bazy danych
 grant select, insert, update, delete, truncate on uzytkownik, uprawnienie, sezon, serial, rola, gatunki_filmow, uprawnienia_rang, ranga, odcinek, ocena, gatunek, film, czlowiek_kina to filmbookapi_user;
 grant create on schema public to filmbookapi_user;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO filmbookapi_user;

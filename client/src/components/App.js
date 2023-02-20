@@ -93,10 +93,11 @@ class App extends React.Component {
         }
     }
 
-    changeUser(username, accessToken){
+    changeUser(username, accessToken, permissions){
         const user = {
             username: username,
-            accessToken: accessToken
+            accessToken: accessToken,
+            permissions: permissions,
         }
         this.setState({
             user: user
@@ -119,7 +120,7 @@ class App extends React.Component {
             return <MoviesList />;
         }
         else if(this.state.site == sites.LOGIN_FORM){
-            return <LoginForm onRegister={() => this.changeSite(sites.REGISTER_FORM)} onUserLoggedIn={(username, accessToken) => { this.changeUser(username, accessToken); this.changeSite(sites.MOVIES_LIST); }}/>;
+            return <LoginForm onRegister={() => this.changeSite(sites.REGISTER_FORM)} onUserLoggedIn={(username, accessToken, permissions) => { this.changeUser(username, accessToken, permissions); this.changeSite(sites.MOVIES_LIST); }}/>;
         }
         else if(this.state.site == sites.REGISTER_FORM){
             return <RegisterForm onLogin={() => this.changeSite(sites.LOGIN_FORM)} />;

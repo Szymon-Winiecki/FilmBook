@@ -11,37 +11,6 @@ import ChangePasswordForm from './ChangePasswordForm';
 
 class UserPanel extends React.Component {
 
-    // async fetchUserRanks(user){
-    //     console.log(user.accessToken);
-    //     try{
-    //         const response = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/user/ranks`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 Authentication: `Bearer ${user.accessToken}` 
-    //             },
-    //             credentials: 'include'
-    //         });            
-
-    //         if(!response.ok){
-    //             console.log(response.status);
-    //         }
-    //         else{
-    //             const data = await response.json();
-
-    //             this.setState({
-    //                 ranks: data
-    //             });
-    //         }
-
-    //     } catch (err){
-    //         console.log(err);
-    //     }
-    // }
-
-    componentDidMount(){
-        // this.fetchUserRanks(this.context);
-    }
-
     changeSite(site) {
         if(document.location.hash != site) {
             document.location.hash = site;
@@ -69,14 +38,14 @@ class UserPanel extends React.Component {
                         </div>
                     </div>
                  {/* : ''} */}
-                {/* {this.state?.ranks?.includes('Admin') ?  */}
+                {this.context?.permissions?.includes('can-see-users') ? 
                     <div className='user-panel'>
                         <h2>Panel administratora</h2>
                         <div className='user-panel-section'> 
                             <input type='button' value='zarządzaj użytkownikami' className='s-input' onClick={() => {this.changeSite('#users')}}/>
                         </div>
                     </div>
-                 {/* : ''} */}
+                 : ''}
             </div>
         );
     }

@@ -53,7 +53,7 @@ function login(userData, callback){
                     { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION_TIME }
                 );
 
-                const updateRefreshTokenQuery = `UPDATE ${usersTableInfo.tableName} SET ${usersTableInfo.refreshTokenField} = '${refreshToken}' WHERE ${usersTableInfo.usernameField} = '${userData.username}'`;
+                const updateRefreshTokenQuery = `UPDATE ${usersTableInfo.tableName} SET ${usersTableInfo.refreshTokenField} = '${refreshToken}' WHERE ${usersTableInfo.usernameField} = '${userData.username}' returning ranga_id`;
                 database.query(updateRefreshTokenQuery, (err, res) => {
                     if(dbUtils.handleError(err, callback)) return;
                     
@@ -61,6 +61,7 @@ function login(userData, callback){
                         status: 200,
                         data: {
                             accessToken: accessToken,
+                            rankId: res.rows[0].ranga_id
                         },
                         cookies: [
                             {
