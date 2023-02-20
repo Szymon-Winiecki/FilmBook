@@ -148,7 +148,7 @@ class MovieDetails extends React.Component {
                                 <span>Czas trwania: </span>
                             </div>
                             <div className='movie-details-details-values'>
-                                <span>tu reżyser</span>
+                                <span>{movie.czlowiek_kina_id ? movie.czlowiek_kina_id : 'brak danych'}</span>
                                 <span>{movie.data_swiatowej_premiery ? movie.data_swiatowej_premiery : 'brak danych'}</span>
                                 <span>{movie.data_polskiej_premiery ? movie.data_polskiej_premiery : 'brak danych'}</span>
                                 <span>{movie.czas_trwania ? movie.czas_trwania : 'brak danych'}</span>
