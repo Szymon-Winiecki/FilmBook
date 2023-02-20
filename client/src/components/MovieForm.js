@@ -6,6 +6,7 @@ import DirectorPicker from './DirectorPicker';
 
 import '../style/MovieForm.css';
 import '../style/inputs.css'
+import GenresPicker from './GenresPicker';
 
 class MovieForm extends React.Component {
 
@@ -15,7 +16,8 @@ class MovieForm extends React.Component {
         this.state = {
             isLoaded: false,
             movieDirector: null,
-            movieDirectorPicker: null
+            movieDirectorPicker: null,
+            selectedGenres: this.props.movie?.genres ? this.props.movie.genres : []
         };
     }
 
@@ -51,7 +53,8 @@ class MovieForm extends React.Component {
             'data_polskiej_premiery': document.querySelector('#movie-release-year-local').value,
             'czas_trwania': parseInt(document.querySelector('#movie-duration-h').value) * 60 + parseInt(document.querySelector('#movie-duration-m').value),
             'opis': document.querySelector('#movie-description').value,
-            'czlowiek_kina_id': this.state.movieDirector?.id ? this.state.movieDirector.id : null
+            'czlowiek_kina_id': this.state.movieDirector?.id ? this.state.movieDirector.id : null,
+            'gatunki': this.state.selectedGenres,
         };
         let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie/${this.props.movie ? '/' + this.props.movie.id : ''}`;
         fetch(url, {
@@ -62,7 +65,16 @@ class MovieForm extends React.Component {
                 },
                 credentials: 'include',
                 body: JSON.stringify(movieData)
-            });
+        })
+        .then((response) => response.json())
+        .then(
+            (response) => {
+                document.location.hash = '#movie/' + response[0].id;
+            },
+            (error) => {
+                console.log('cos poszło nie tak');
+            }
+        );
     }
 
     componentDidMount(){
@@ -85,6 +97,12 @@ class MovieForm extends React.Component {
 
     pickDirector() {
         this.setState({movieDirectorPicker : <DirectorPicker onSelectDirector={this.handleDirectorSelect} />});
+    }
+
+    changeGenres(genres){
+        this.setState({
+            selectedGenres: genres
+        })
     }
 
     render(){
@@ -146,6 +164,11 @@ class MovieForm extends React.Component {
                 
                 <div>
                     {this.state.movieDirectorPicker}
+                </div>
+
+                <div>
+                    <label htmlFor="movie-release-year-local">Gatunki:</label>
+                    <GenresPicker selected={this.state.selectedGenres} onChange={(genres) => this.changeGenres(genres)}/>
                 </div>
 
                 <div>

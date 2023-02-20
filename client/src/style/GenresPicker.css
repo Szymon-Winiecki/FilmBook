@@ -1,0 +1,23 @@
+.genres-picker{
+    display: flex;
+    flex-direction: column;
+}
+
+.picker-list{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.picker-list-row{
+    cursor: default;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.picker-list-row:hover{
+   background-color: var(--main-background-tint-color);
+}

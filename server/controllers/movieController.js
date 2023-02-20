@@ -65,6 +65,27 @@ function addMovie(req, res){
             console.error(query);
             return res.sendStatus(500);
         }
+
+        if(req.body.gatunki?.length > 0){
+            let genresRows = '';
+            req.body.gatunki.forEach((genreId, i) => {
+                if(i == 0){
+                    genresRows += `(${qres.rows[0].id}, ${genreId})`;
+                }
+                else{
+                    genresRows += `,(${qres.rows[0].id}, ${genreId})`
+                }
+                
+            });
+            const genresQuery = `insert into gatunki_filmow(film_id, gatunek_id) values ${genresRows};`;
+            database.query(genresQuery, (gqerr, gqres) => {
+                if(gqerr){
+                    console.error(gqerr);
+                    console.error(genresQuery);
+                    return res.sendStatus(500);
+                }
+            })
+        }
         res.status(200).json(qres.rows);
     })
 }
@@ -72,13 +93,45 @@ function addMovie(req, res){
 function updateMovie(req, res){
     const query =   `update film set 
                     tytul_polski='${req.body.tytul_polski}', tytul_orginalny='${req.body.tytul_orginalny}', data_swiatowej_premiery='${req.body.data_swiatowej_premiery}', data_polskiej_premiery='${req.body.data_polskiej_premiery}', czas_trwania=${req.body.czas_trwania}, opis='${req.body.opis}', czlowiek_kina_id=${req.body.czlowiek_kina_id}
-                    where id=${req.params.id} returning *;`
+                    where id=${req.params.id} returning *;`;
     database.query(query, (qerr, qres) => {
         if(qerr){
             console.error(qerr);
             console.error(query);
             return res.sendStatus(500);
         }
+
+        deleteGenresQuery = `delete from gatunki_filmow where film_id=${qres.rows[0].id};`;
+        database.query(deleteGenresQuery, (derr, dres) => {
+            if(derr){
+                console.error(qerr);
+                console.error(query);
+                return res.sendStatus(500);
+            }
+
+            if(req.body.gatunki?.length > 0){
+                let genresRows = '';
+                req.body.gatunki.forEach((genreId, i) => {
+                    if(i == 0){
+                        genresRows += `(${qres.rows[0].id}, ${genreId})`;
+                    }
+                    else{
+                        genresRows += `,(${qres.rows[0].id}, ${genreId})`
+                    }
+                    
+                });
+                const genresQuery = `insert into gatunki_filmow(film_id, gatunek_id) values ${genresRows};`;
+                database.query(genresQuery, (gqerr, gqres) => {
+                    if(gqerr){
+                        console.error(gqerr);
+                        console.error(genresQuery);
+                        return res.sendStatus(500);
+                    }
+                })
+            }
+
+        });
+
         res.status(200).json(qres.rows);
     })
 }
