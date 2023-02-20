@@ -3,13 +3,12 @@ const bcrypt = require('bcrypt');
 const database = require('../dbconn/dbPool');
 
 const usersTableInfo = require('../database_info/usersTableInfo');
-const usersRanksTableInfo = require('../database_info/usersRanksTableInfo');
 const ranksTableInfo = require('../database_info/ranksTableInfo');
 
 const schemas = require('../validation/authenticationSchemas');
 
 function getAllUsers(req, res){
-    const query = `select id, nazwa, email from uzytkownik;`;
+    const query = `select id, nazwa, email, ranga_id from uzytkownik;`;
     database.query(query, (qerr, qres) => {
         if(qerr){
             console.error(qerr);
@@ -36,24 +35,8 @@ function deleteUser(req, res){
     res.status(200).json( {function: 'delete user'} );
 }
 
-function getUserRanks(req, res){
-    const query = `SELECT r.${ranksTableInfo.nameField} FROM ${usersTableInfo.tableName} u join ${usersRanksTableInfo.tableName} ur on u.${usersTableInfo.idField} = ur.${usersRanksTableInfo.userIdField} join ${ranksTableInfo.tableName} r on ur.${usersRanksTableInfo.rankIdField} = r.${ranksTableInfo.idField} WHERE u.${usersTableInfo.idField} = '${req.params.id}'`;
-    database.query(query, (qerr, qres) => {
-        if(qerr){
-            console.error(qerr);
-            console.error(query);
-            return res.sendStatus(500);
-        }
-        if(qres.rowCount == 0){
-            return res.sendStatus(404);
-        }
-        const ranks = qres.rows.map((row) => {return row[ranksTableInfo.nameField];});
-        res.status(200).json(ranks);
-    })
-}
-
-function getOwnRanks(req, res){
-    const query = `SELECT r.${ranksTableInfo.nameField} FROM ${usersTableInfo.tableName} u join ${usersRanksTableInfo.tableName} ur on u.${usersTableInfo.idField} = ur.${usersRanksTableInfo.userIdField} join ${ranksTableInfo.tableName} r on ur.${usersRanksTableInfo.rankIdField} = r.${ranksTableInfo.idField} WHERE u.${usersTableInfo.idField} = '${req.user.id}'`;
+function getOwnPermissions(req, res){
+    const query = ``;
     database.query(query, (qerr, qres) => {
         if(qerr){
             console.error(qerr);
@@ -141,7 +124,6 @@ module.exports = {
     addUser,
     updateUser,
     deleteUser,
-    getUserRanks,
-    getOwnRanks,
+    getOwnPermissions,
     changeOwnPassword
 }

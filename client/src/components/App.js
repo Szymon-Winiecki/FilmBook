@@ -19,6 +19,8 @@ import PersonDetails from './PersonDetails'
 import PersonAdd from './PersonAdd';
 import PersonEdit from './PersonEdit';
 import UsersList from './UsersList';
+import RankAdd from './RankAdd';
+import RankEdit from './RankEdit';
 
 
 const sites = {
@@ -34,6 +36,9 @@ const sites = {
     PERSON_ADD: '#add/person',
     PERSON_EDIT: '#edit/person',
     USERS_LIST: '#users',
+    MOVIES_EDIT: '#edit/movies',
+    RANK_ADD: '#add/rank',
+    RANK_EDIT: '#edit/rank',
 }
 
 class App extends React.Component {
@@ -139,6 +144,15 @@ class App extends React.Component {
         }
         else if(this.state.site == sites.USERS_LIST){
             return <UsersList />;
+        }
+        else if(this.state.site == sites.MOVIES_EDIT){
+            return <MoviesList edit={true} />;
+        }
+        else if(this.state.site == sites.RANK_ADD){
+            return <RankAdd />;
+        }
+        else if(this.state.site.substring(0,11) == sites.RANK_EDIT + '/'){
+            return <RankEdit rankId={this.state.site.substring(11)} />;
         }
         else{
             return <h1>404</h1>

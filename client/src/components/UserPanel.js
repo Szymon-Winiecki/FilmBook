@@ -42,6 +42,12 @@ class UserPanel extends React.Component {
         this.fetchUserRanks(this.context);
     }
 
+    changeSite(site) {
+        if(document.location.hash != site) {
+            document.location.hash = site;
+        }
+    }
+
     render(){
         return (
             <div className="user-panel-site">
@@ -56,7 +62,7 @@ class UserPanel extends React.Component {
                     <div className='user-panel'>
                         <h2>Panel edytora</h2>
                         <div className='user-panel-section'> 
-                            <input type='button' value='zarządzaj filmami' className='s-input'/>
+                            <input type='button' value='zarządzaj filmami' className='s-input' onClick={() => {this.changeSite('#edit/movies')}}/>
                         </div>
                         <div className='user-panel-section'> 
                             <input type='button' value='zarządzaj serialami' className='s-input'/>
@@ -67,7 +73,7 @@ class UserPanel extends React.Component {
                     <div className='user-panel'>
                         <h2>Panel administratora</h2>
                         <div className='user-panel-section'> 
-                            <input type='button' value='zarządzaj użytkownikami' className='s-input'/>
+                            <input type='button' value='zarządzaj użytkownikami' className='s-input' onClick={() => {this.changeSite('#users')}}/>
                         </div>
                     </div>
                  : ''}

@@ -13,7 +13,7 @@ class Movie extends React.Component {
         this.state = { year: year };
     }
 
-    handleClick() {
+    changeSite() {
         let site = `#movie/${this.props.movie.id}`;
         if(document.location.hash != site) {
             document.location.hash = site;
@@ -22,7 +22,7 @@ class Movie extends React.Component {
 
     render(){
         return (
-            <div className="movie-row" onClick={() => this.handleClick()}>
+            <div className="movie-row" onClick={() => this.changeSite()}>
                 <div className='no-field'> { this.props.movie.no }. </div>
                 <div className='title-field'> 
                     <div className='movie-title-up'>

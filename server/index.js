@@ -13,6 +13,8 @@ const personRoutes = require('./routes/personRoutes.js');
 const genreRoutes = require('./routes/genreRoutes.js');
 const roleRoutes = require('./routes/roleRoutes.js');
 const authRoutes = require('./routes/authRoutes.js');
+const rankRoutes = require('./routes/rankRoutes.js');
+const permissionRoutes = require('./routes/permissionRoutes.js');
 
 const app = express();
 
@@ -36,6 +38,8 @@ app.use('/api/movie', movieRoutes);
 app.use('/api/person', personRoutes);
 app.use('/api/genre', genreRoutes);
 app.use('/api/role', roleRoutes);
+app.use('/api/rank', rankRoutes);
+app.use('/api/permission', permissionRoutes);
 app.use('/', authRoutes); // both login and register
 
 // errors

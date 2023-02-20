@@ -76,6 +76,9 @@ ALTER TABLE ranga ADD CONSTRAINT ranga_pk PRIMARY KEY ( id );
 
 --alter table ranga drop column uzytkownik_id;
 
+insert into ranga(nazwa) values ('Admin');
+insert into ranga(nazwa) values ('User');
+
 CREATE TABLE uprawnienia_rang (
     ranga_id          INTEGER NOT NULL,
     uprawnienie_nazwa VARCHAR(126) NOT NULL
@@ -83,11 +86,6 @@ CREATE TABLE uprawnienia_rang (
 
 ALTER TABLE uprawnienia_rang ADD CONSTRAINT uprawnienia_rang_pk PRIMARY KEY ( ranga_id,
                                                                     uprawnienie_nazwa );
-
-CREATE TABLE rangi_uzytkownikow(
-    ranga_id        INTEGER NOT NULL,
-    uzytkownik_id   INTEGER NOT NULL
-)
 
 CREATE TABLE gatunki_filmow (
     film_id    INTEGER NOT NULL,
@@ -147,13 +145,18 @@ CREATE TABLE uzytkownik (
     nazwa          VARCHAR(126) NOT NULL,
     email          VARCHAR(256) NOT NULL,
     nr_telefonu    VARCHAR(14),
-    data_urodzenia DATE
+    data_urodzenia DATE,
+    ranga_id       INTEGER DEFAULT 2
 );
 
 ALTER TABLE uzytkownik ADD password VARCHAR(255);
 ALTER TABLE uzytkownik ADD refreshToken VARCHAR(256);
 
 ALTER TABLE uzytkownik ADD CONSTRAINT uzytkownik_pk PRIMARY KEY ( id );
+
+ALTER TABLE uzytkownik
+    ADD CONSTRAINT uzytkownik_ranga_fk FOREIGN KEY ( ranga_id )
+        REFERENCES ranga ( id );
 
 ALTER TABLE film
     ADD CONSTRAINT film_czlowiek_kina_fk FOREIGN KEY ( czlowiek_kina_id )
@@ -175,17 +178,9 @@ ALTER TABLE odcinek
     ADD CONSTRAINT odcinek_sezon_fk FOREIGN KEY ( sezon_id )
         REFERENCES sezon ( id );
 
-ALTER TABLE rangi_uzytkownikow
-    ADD CONSTRAINT uzytkownik_fk FOREIGN KEY ( uzytkownik_id )
-        REFERENCES uzytkownik ( id );
-
-ALTER TABLE rangi_uzytkownikow
-    ADD CONSTRAINT ranga_fk FOREIGN KEY ( ranga_id )
-        REFERENCES ranga ( id );
-
 ALTER TABLE uprawnienia_rang
     ADD CONSTRAINT uprawnienia_rang_ranga_fk FOREIGN KEY ( ranga_id )
-        REFERENCES ranga ( id );
+        REFERENCES ranga ( id ) ON DELETE CASCADE;
 
 ALTER TABLE uprawnienia_rang
     ADD CONSTRAINT uprawnienia_rang_uprawnienie_fk FOREIGN KEY ( uprawnienie_nazwa )
@@ -220,6 +215,6 @@ ALTER TABLE sezon
         REFERENCES serial ( id );
 
 -- uprawnienia
-grant select, insert, update, delete, truncate on uzytkownik, uprawnienie, sezon, serial, rola, gatunki_filmow, uprawnienia_rang, ranga, odcinek, ocena, gatunek, film, czlowiek_kina, rangi_uzytkownikow to filmbookapi_user;
+grant select, insert, update, delete, truncate on uzytkownik, uprawnienie, sezon, serial, rola, gatunki_filmow, uprawnienia_rang, ranga, odcinek, ocena, gatunek, film, czlowiek_kina to filmbookapi_user;
 grant create on schema public to filmbookapi_user;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO filmbookapi_user;

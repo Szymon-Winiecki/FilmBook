@@ -17,7 +17,7 @@ class MoviesList extends React.Component {
 
     getMovie(movie){
         return (
-            <Movie key={movie.id} movie={movie} />
+            <Movie key={movie.id} movie={movie} edit={this.props.edit} />
         );
     }
 
@@ -75,7 +75,7 @@ class MoviesList extends React.Component {
     render(){
         return (
             <div className='movies-list-site'>
-                <h1 className='section-title'>Filmy</h1>
+                <h1 className='section-title'>{this.props.edit ? "Zarządzanie filmami" : "Filmy"}</h1>
                 <div className='movie-list-controlls'>
                     <div className='list-controll'>
                         <label htmlFor='genre-select' className='list-control-label'>Gatunek: </label>

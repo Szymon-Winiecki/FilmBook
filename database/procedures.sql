@@ -1,60 +1,24 @@
 create or replace procedure nadaj_uprawnienie(
-   nazwa_rangi ranga.nazwa%type,
-   nazwa_uprawnienia uprawnienie.nazwa%type
+   p_ranga_id ranga.id%type,
+   p_nazwa_uprawnienia uprawnienie.nazwa%type
 )
 language plpgsql    
 as $$
 declare
-	_ranga_id ranga.id%type;
 	_uprawnienie uprawnienie.nazwa%type;
-begin
-   	select into _ranga_id id from ranga where nazwa = nazwa_rangi;
-	
-	if _ranga_id IS NULL then
-		insert into ranga(nazwa) values(nazwa_rangi);
-		select into _ranga_id id from ranga where nazwa = nazwa_rangi;
+	_liczUprawnienie integer;
+begin	
+   	select into _uprawnienie nazwa from uprawnienie where nazwa = p_nazwa_uprawnienia;
 		
-		RAISE NOTICE 'utowrzono range %', nazwa_rangi;
-	end if;
-	
-   	select into _uprawnienie nazwa from uprawnienie where nazwa = nazwa_uprawnienia;
-	
-	if _uprawnienie IS NULL then
-		insert into uprawnienie(nazwa) values(nazwa_uprawnienia);
-		_uprawnienie = nazwa_uprawnienia;
-		
-		RAISE NOTICE 'utowrzono uprawnienie %', nazwa_uprawnienia;
-	end if;
-	
-	
-	insert into uprawnienia_rang(ranga_id, uprawnienie_nazwa) values(_ranga_id, _uprawnienie);
-end;$$;
+	if _uprawnienie is not null then
+		select into _liczUprawnienie count(*)
+		from uprawnienia_rang
+		where ranga_id = p_ranga_id and uprawnienie_nazwa = _uprawnienie;
 
-create or replace procedure nadaj_range(
-   nazwa_uzytkownika uzytkownik.nazwa%type,
-   nazwa_rangi ranga.nazwa%type
-)
-language plpgsql  
-as $$
-declare
-	_uzytkownik_id uzytkownik.id%type;
-	_ranga_id ranga.id%type;
-begin
-   	select into _uzytkownik_id id from uzytkownik where nazwa = nazwa_uzytkownika;
-	
-	if _uzytkownik_id IS NULL then
-		RAISE NOTICE 'Nie ma takiego uzytkownika';
-		return;
+		if _liczUprawnienie = 0 then
+			insert into uprawnienia_rang(ranga_id, uprawnienie_nazwa) values(p_ranga_id, _uprawnienie);
+		end if;
 	end if;
-	
-   	select into _ranga_id id from ranga where nazwa = nazwa_rangi;
-	
-	if _ranga_id IS NULL then
-		RAISE NOTICE 'Nie ma takiej rangi';
-		return;
-	end if;
-	
-	insert into rangi_uzytkownikow(uzytkownik_id, ranga_id) values(_uzytkownik_id, _ranga_id);
 end;$$;
 
 create or replace function authorize(

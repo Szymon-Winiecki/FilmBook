@@ -7,11 +7,8 @@ const authorization = require('../middleware/authorize');
 
 const usersController = require('../controllers/userController');
 
-//get ranks of specific user
-router.get('/ranks/:id', authentication, authorization('show_user_rank'), usersController.getUserRanks);
-
-//get your own ranks
-router.get('/ranks/', authentication, usersController.getOwnRanks);
+//get your own permissions
+router.get('/permissions', authentication, usersController.getOwnPermissions);
 
 //change your own password
 router.put('/changepassword', authentication, usersController.changeOwnPassword);
