@@ -28,7 +28,6 @@ class MoviesList extends React.Component {
         const movies = [];
         this.state.movies.forEach((movie, i) => {
             movie.no = i + 1;
-            movie.rate = 9;
             movies.push(this.getMovie(movie));
         });
 

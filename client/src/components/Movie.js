@@ -31,7 +31,7 @@ class Movie extends React.Component {
                     </div>
                     <span className='movie-title-original'>{ this.props.movie.tytul_orginalny } </span>
                 </div>
-                <div className='rate-field'> {this.props.movie.rate.toFixed(1)}/10 <i className="bi bi-star-fill"></i></div>
+                <div className='rate-field'> {this.props.movie.srednia_ocen ? parseFloat(this.props.movie.srednia_ocen).toFixed(1) : '?'}/10 <i className="bi bi-star-fill"></i></div>
             </div>
         );
     }
