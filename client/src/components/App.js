@@ -96,12 +96,16 @@ class App extends React.Component {
     }
 
     changeUser(username, accessToken){
+        const user = {
+            username: username,
+            accessToken: accessToken
+        }
         this.setState({
-            user:{
-                username: username,
-                accessToken: accessToken
-            }
+            user: user
         });
+
+        console.log(user);
+        sessionStorage.setItem("user", JSON.stringify(user));
     }
 
     changeSite(site){
@@ -168,7 +172,19 @@ class App extends React.Component {
         }
     }
 
+    restoreUser(){
+        let savedUser = sessionStorage.getItem("user");
+        if(savedUser && savedUser != ''){
+            savedUser = JSON.parse(savedUser);
+            this.setState({
+                user: savedUser
+            });
+        }
+    }
+
     componentDidMount(){
+        this.restoreUser();
+
         window.onpopstate = ()=> {
             this.readAndChangeSite();
         }
