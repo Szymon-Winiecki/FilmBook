@@ -25,7 +25,7 @@ import RankEdit from './RankEdit';
 
 const sites = {
     MOVIES_LIST: '#movies',
-    SERIES_LIST: '#series',
+    PEOPLE_LIST: '#people',
     LOGIN_FORM: '#login',
     REGISTER_FORM: '#register',
     USER_PANEL: '#userpanel',
@@ -49,8 +49,8 @@ class App extends React.Component {
             onClick: () => { this.changeSite(sites.MOVIES_LIST); }
         },
         {
-            label: "Seriale",
-            onClick: () => this.changeSite(sites.SERIES_LIST)
+            label: "Ludzie kina",
+            onClick: () => this.changeSite(sites.PEOPLE_LIST)
         },
     ]
 
