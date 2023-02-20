@@ -30,6 +30,21 @@ function getAllGenres(req, res){
     })
 }
 
+function getGenresOfMovie(req, res){
+    const query = `select gatunek.id, gatunek.nazwa from gatunek join gatunki_filmow on gatunek.id = gatunki_filmow.gatunek_id where gatunki_filmow.film_id = ${req.params.id};`;
+    database.query(query, (qerr, qres) => {
+        if(qerr){
+            console.error(qerr);
+            console.error(query);
+            return res.sendStatus(500);
+        }
+        if(qres.rows.length == 0){
+            return res.sendStatus(404);
+        }
+        res.status(200).json(qres.rows);
+    });
+}
+
 function getGenre(req, res){
     const query = `select * from gatunek where id=${req.params.id};`
     database.query(query, (qerr, qres) => {
@@ -83,6 +98,7 @@ function deleteGenre(req, res){
 
 module.exports = {
     getAllGenres,
+    getGenresOfMovie,
     getGenre,
     addGenre,
     updateGenre,

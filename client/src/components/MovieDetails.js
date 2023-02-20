@@ -25,7 +25,6 @@ class MovieDetails extends React.Component {
         .then((response) => response.json())
         .then(
             (data) => {
-                data[0].genres = ['Horror', 'Sci-fi', 'Dramat'];
                 this.setState({
                     isLoaded: true,
                     movie: data[0]
@@ -56,8 +55,25 @@ class MovieDetails extends React.Component {
         );
     }
 
+    fetchGenres(){
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/genre/movie/${this.props.movieId}`;
+        fetch(url)
+        .then((response) => response.json())
+        .then(
+            (data) => {
+                this.setState({
+                    genres: data
+                })
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
     fetchAll(){
         this.fetchMovie();
+        this.fetchGenres();
         this.fetchRates();
     }
 
@@ -71,17 +87,17 @@ class MovieDetails extends React.Component {
         }
     }
 
-    getGenres(movie){
-        if(!movie?.genres || movie.genres?.length == 0){
+    getGenres(genres){
+        if(!genres || genres?.length == 0){
             return '';
         }
         let genresList = '';
-        movie.genres.forEach((genre, i) => {
+        genres.forEach((genre, i) => {
             if(i == 0){
-                genresList += genre;
+                genresList += genre.nazwa;
             }
             else{
-                genresList += ', ' + genre;
+                genresList += ', ' + genre.nazwa;
             }
         });
 
@@ -106,7 +122,7 @@ class MovieDetails extends React.Component {
     }
 
     render(){
-        const { error, isLoaded, movie, rates } = this.state;
+        const { error, isLoaded, movie, rates, genres } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         }
@@ -122,7 +138,7 @@ class MovieDetails extends React.Component {
                             <span>({extractYearFromDate(movie.data_swiatowej_premiery)})</span>
                         </div>
                         <span className='movie-details-original-title'>{movie.tytul_orginalny}</span>
-                        <div className='movie-details-genres'>{this.getGenres(movie)}</div>
+                        <div className='movie-details-genres'>{this.getGenres(genres)}</div>
                         <span className='movie-details-description'>{movie.opis}</span>
                         <div className='movie-details-details'>
                             <div className='movie-details-details-names'>

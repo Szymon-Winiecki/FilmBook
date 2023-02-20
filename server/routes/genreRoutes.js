@@ -7,6 +7,8 @@ const authorization = require('../middleware/authorize');
 
 const genreController = require('../controllers/genreController');
 
+router.get('/movie/:id', genreController.getGenresOfMovie);
+
 router.get('/', (req, res) => {
     genreController.getAllGenres(req, res);
 });
