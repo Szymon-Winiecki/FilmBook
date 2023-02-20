@@ -49,7 +49,20 @@ class MoviesList extends React.Component {
     }
 
     fetchMovies(){
-        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie`).then((response) => response.json()).then((data) => {
+
+        let selectedGenre = '';
+        const genreSelectElem = document.getElementById('genre-select');
+        if(genreSelectElem && genreSelectElem.selectedIndex > 0){
+            selectedGenre = `genre=${genreSelectElem.value}`;
+        }
+
+        let selectedSort = '';
+        const sortSelectElem = document.getElementById('sort-select');
+        if(genreSelectElem){
+            selectedSort = sortSelectElem.value;
+        }
+
+        fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie?${selectedGenre}&${selectedSort}`).then((response) => response.json()).then((data) => {
             this.setState({
                 movies: data,
                 moviesLoaded: true
@@ -78,17 +91,17 @@ class MoviesList extends React.Component {
                 <div className='movie-list-controlls'>
                     <div className='list-controll'>
                         <label htmlFor='genre-select' className='list-control-label'>Gatunek: </label>
-                        <select id='genre-select'>
+                        <select id='genre-select' onChange={() => this.fetchMovies()}>
                             {this.getGenres()}
                         </select>
                     </div>
                     <div className='list-controll'>
                         <label htmlFor='sort-select' className='list-control-label'>Sortuj wg: </label>
-                        <select id='sort-select'>
-                            <option value='rate_asc'>ocena (rosnąco)</option>
-                            <option value='rate_desc'>ocena (malejąco)</option>
-                            <option value='title_asc'>tytuł (rosnąco)</option>
-                            <option value='title_desc'>tytuł (malejąco)</option>
+                        <select id='sort-select' onChange={() => this.fetchMovies()}>
+                            <option value='sortBy=srednia_ocen&sortDir=asc'>ocena (rosnąco)</option>
+                            <option value='sortBy=srednia_ocen&sortDir=desc'>ocena (malejąco)</option>
+                            <option value='sortBy=tytul_polski&sortDir=asc'>tytuł (rosnąco)</option>
+                            <option value='sortBy=tytul_polski&sortDir=desc'>tytuł (malejąco)</option>
                         </select>
                     </div>
                 </div>

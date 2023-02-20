@@ -19,7 +19,21 @@ const addMovieView = (req, res) => {
 }
 
 function getAllMovies(req, res){
-    const query = `select * from film;`
+    let whereClause = '';
+    let sortClause = '';
+
+    if(req.query.genre){
+        whereClause = `where gatunek.nazwa='${req.query.genre}'`;
+    }
+
+    if(req.query.sortBy){
+        sortClause = `order by film.${req.query.sortBy} `;
+        if(req.query.sortDir){
+            sortClause += req.query.sortDir;
+        }
+    }
+
+    const query = `select film.* from film ${req.query.genre ? 'join gatunki_filmow on film.id = gatunki_filmow.film_id join gatunek on gatunki_filmow.gatunek_id = gatunek.id' : ''} ${whereClause} ${sortClause};`
     database.query(query, (qerr, qres) => {
         if(qerr){
             console.error(qerr);
