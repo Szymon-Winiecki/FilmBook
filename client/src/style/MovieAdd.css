@@ -1,0 +1,24 @@
+.movie-add-site{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+  
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.user-panel{
+    width: min-content;
+}
+
+.user-panel-section{
+    margin-left: 100px;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    width: 100%;
+}

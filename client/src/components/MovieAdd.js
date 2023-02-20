@@ -1,7 +1,6 @@
 import React from 'react';
 
-import const_props from '../constant_properties';
-import '../style/MovieForm.css';
+import '../style/MovieAdd.css';
 import MovieForm from './MovieForm'
 
 class MovieAdd extends React.Component {

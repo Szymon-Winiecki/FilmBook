@@ -52,7 +52,6 @@ class LoginForm extends React.Component {
             }
             else{
                 const data = await response.json();
-                console.log(data);
 
                 this.props.onUserLoggedIn(userData.username, data.accessToken);
             }

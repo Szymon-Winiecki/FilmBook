@@ -82,8 +82,6 @@ class App extends React.Component {
                 console.log(response.status);
             }
             else{
-                console.log(response.status);
-
                 this.changeUser(undefined, undefined);
                 this.changeSite(sites.LOGIN_FORM);
             }
@@ -104,7 +102,6 @@ class App extends React.Component {
             user: user
         });
 
-        console.log(user);
         sessionStorage.setItem("user", JSON.stringify(user));
     }
 
