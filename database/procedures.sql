@@ -66,3 +66,29 @@ begin
 	end loop;
 end
 $$;
+
+
+
+
+
+create or replace function update_avg_rate()
+returns trigger
+language plpgsql    
+as $$
+declare
+	_avg numeric;
+	_film_id ocena.film_id%type;
+begin	
+	if new.film_id is null then
+		_film_id = old.film_id;
+	else
+		_film_id = new.film_id;
+	end if;
+   select into _avg avg(ocena) from ocena where film_id = _film_id;
+	update film set srednia_ocen = _avg  where id = _film_id;
+	return new;
+end;$$;
+
+CREATE OR REPLACE TRIGGER update_avg_rate_i AFTER insert ON ocena FOR EACH ROW EXECUTE PROCEDURE update_avg_rate();
+CREATE OR REPLACE TRIGGER update_avg_rate_u AFTER update ON ocena FOR EACH ROW EXECUTE PROCEDURE update_avg_rate();
+CREATE OR REPLACE TRIGGER update_avg_rate_d AFTER delete ON ocena FOR EACH ROW EXECUTE PROCEDURE update_avg_rate();

@@ -30,6 +30,8 @@ CREATE TABLE film (
     czlowiek_kina_id        INTEGER
 );
 
+alter table film add column srednia_ocen numeric(5,3);
+
 ALTER TABLE film ADD CONSTRAINT film_pk PRIMARY KEY ( id );
 
 CREATE TABLE gatunek (

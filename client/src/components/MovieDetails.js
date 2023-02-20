@@ -146,7 +146,7 @@ class MovieDetails extends React.Component {
                     <div className='movie-details-side-section'>
                         <div className='movie-details-avg-rate'>
                             <i className="bi bi-star-fill"></i>
-                            <span> 9.0 / 10</span>
+                            <span> {movie.srednia_ocen ? parseFloat(movie.srednia_ocen).toFixed(1) : '?'} / 10</span>
                         </div>
                     </div>
                     
