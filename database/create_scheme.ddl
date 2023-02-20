@@ -56,6 +56,8 @@ ALTER TABLE ocena
 
 ALTER TABLE ocena ADD CONSTRAINT ocena_pk PRIMARY KEY ( id );
 
+ALTER TABLE ocena ADD UNIQUE (film_id, uzytkownik_id);
+
 CREATE TABLE odcinek (
     id              SERIAL NOT NULL,
     tytul_polski    VARCHAR(512),

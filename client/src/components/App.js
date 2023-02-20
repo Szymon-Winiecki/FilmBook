@@ -88,6 +88,8 @@ class App extends React.Component {
                 this.changeSite(sites.LOGIN_FORM);
             }
 
+            this.changeUser(undefined);
+
         } catch (err){
             console.log(err);
         }

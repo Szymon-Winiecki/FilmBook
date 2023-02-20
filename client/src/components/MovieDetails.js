@@ -1,8 +1,11 @@
 import React from 'react';
 
-import const_props from '../constant_properties';
+import const_props, { UserContext } from '../constant_properties';
 import {extractYearFromDate} from '../helpers/helpers'
+
 import '../style/MovieDetails.css';
+import '../style/inputs.css';
+import AddRateForm from './AddRateForm';
 
 class MovieDetails extends React.Component {
 
@@ -22,6 +25,7 @@ class MovieDetails extends React.Component {
         .then((response) => response.json())
         .then(
             (data) => {
+                data[0].genres = ['Horror', 'Sci-fi', 'Dramat'];
                 this.setState({
                     isLoaded: true,
                     movie: data[0]
@@ -35,19 +39,74 @@ class MovieDetails extends React.Component {
             }
         );
     }
+    
+    fetchRates(){
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rate/movie/${this.props.movieId}`;
+        fetch(url)
+        .then((response) => response.json())
+        .then(
+            (data) => {
+                this.setState({
+                    rates: data
+                })
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+    fetchAll(){
+        this.fetchMovie();
+        this.fetchRates();
+    }
 
     componentDidMount(){
-        this.fetchMovie();
+        this.fetchAll();
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.movieId !== this.props.movieId) {
-          this.fetchMovie();
+          this.fetchAll();
         }
     }
 
+    getGenres(movie){
+        if(!movie?.genres || movie.genres?.length == 0){
+            return '';
+        }
+        let genresList = '';
+        movie.genres.forEach((genre, i) => {
+            if(i == 0){
+                genresList += genre;
+            }
+            else{
+                genresList += ', ' + genre;
+            }
+        });
+
+        return genresList;
+    }
+
+    getRates(rates){
+        if(!rates || rates?.length == 0){
+            return 'Brak ocen';
+        }
+
+        let ratesList = [];
+        rates.forEach((rate, i) => {
+            ratesList.push(<div key={i} className='rate-container'>
+                <span className='rate-rate'>{rate.ocena} / 10 <i className="bi bi-star-fill"></i></span>
+                <span className='rate-description'>{rate.uzasadnienie}</span>
+                <span className='rate-author'>{rate.autor}</span>
+            </div>);
+        });
+
+        return ratesList;
+    }
+
     render(){
-        const { error, isLoaded, movie } = this.state;
+        const { error, isLoaded, movie, rates } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         }
@@ -57,8 +116,41 @@ class MovieDetails extends React.Component {
         else if (movie) {
             return (
                 <div className="movie-details-site">
-                    <h1>{movie.tytul_polski} {extractYearFromDate(movie.data_swiatowej_premiery)}</h1>
-                    <span>{movie.opis}</span>
+                    <div className="movie-details-main-section">
+                        <div className='movie-details-title-row'>
+                            <h1>{movie.tytul_polski}</h1>
+                            <span>({extractYearFromDate(movie.data_swiatowej_premiery)})</span>
+                        </div>
+                        <span className='movie-details-original-title'>{movie.tytul_orginalny}</span>
+                        <div className='movie-details-genres'>{this.getGenres(movie)}</div>
+                        <span className='movie-details-description'>{movie.opis}</span>
+                        <div className='movie-details-details'>
+                            <div className='movie-details-details-names'>
+                                <span>Reżyser: </span>
+                                <span>Premiera światowa: </span>
+                                <span>Premiera polska: </span>
+                                <span>Czas trwania: </span>
+                            </div>
+                            <div className='movie-details-details-values'>
+                                <span>tu reżyser</span>
+                                <span>{movie.data_swiatowej_premiery ? movie.data_swiatowej_premiery : 'brak danych'}</span>
+                                <span>{movie.data_polskiej_premiery ? movie.data_polskiej_premiery : 'brak danych'}</span>
+                                <span>{movie.czas_trwania ? movie.czas_trwania : 'brak danych'}</span>
+                            </div>
+                        </div>
+                        <h2>Oceny widzów:</h2>
+                        <div className='movie-details-rates'>{this.getRates(rates)}</div>
+                        <h2>Oceń ten film:</h2>
+                        <AddRateForm movie={movie} onRate={() => this.fetchAll()}/>
+                    </div>
+                    <div className='movie-details-side-section'>
+                        <div className='movie-details-avg-rate'>
+                            <i className="bi bi-star-fill"></i>
+                            <span> 9.0 / 10</span>
+                        </div>
+                    </div>
+                    
+                   
                 </div>
             );
         }
@@ -69,5 +161,6 @@ class MovieDetails extends React.Component {
         }
     }
 }
+MovieDetails.contextType = UserContext;
 
 export default MovieDetails;
