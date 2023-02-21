@@ -9,6 +9,8 @@ const rateController = require('../controllers/rateController');
 
 router.get('/movie/:id/my', authentication, rateController.getOwnRateOfMovie);
 
+router.delete('/movie/:id/my', authentication, rateController.deleteOwnRateOfMovie);
+
 router.get('/movie/:id', rateController.getAllRatesForMovie);
 
 router.get('/user/:id', rateController.getAllRatesOfUser);

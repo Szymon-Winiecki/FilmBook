@@ -95,6 +95,18 @@ function updateRate(req, res){
     });
 }
 
+function deleteOwnRateOfMovie(req, res){
+    const query = `DELETE FROM ${ratesTableInfo.tableName} WHERE ${ratesTableInfo.movieIdField} = ${req.params.id} AND ${ratesTableInfo.useridField} = ${req.user.id} returning *;`
+    database.query(query, (qerr, qres) => {
+        if(qerr){
+            console.error(qerr);
+            console.error(query);
+            return res.sendStatus(500);
+        }
+        res.status(200).json(qres.rows);
+    });
+}
+
 function deleteRate(req, res){
 
 }
@@ -104,6 +116,7 @@ module.exports = {
     getAllRatesForMovie,
     getAllRatesOfUser,
     getOwnRateOfMovie,
+    deleteOwnRateOfMovie,
     getRate,
     addRate,
     updateRate,
