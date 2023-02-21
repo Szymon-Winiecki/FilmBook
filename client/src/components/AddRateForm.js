@@ -50,14 +50,52 @@ class AddRateForm extends React.Component {
             if(!response.ok){
                 const message = await response.text();
                 this.setState({
-                    success: false,
+                    success: undefined,
                     error: response.status,
                     errorMessage: message
                 });
             }
             else{
                 this.setState({
-                    success: true,
+                    success: 'wystawiono ocenę',
+                    error: undefined,
+                    errorMessage: undefined
+                });
+                this.clearForm();
+                this.props.onRate();
+                this.getOwnRate();
+            }
+
+        } catch (err){
+            console.log(err);
+        }
+    }
+
+    async deleteRate(){
+        const user = this.context;
+        if(!this.props?.movie?.id) return;
+
+        try{
+            const response = await fetch(`http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rate/movie/${this.props.movie.id}/my`, {
+                method: 'DELETE',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authentication: `Bearer ${user.accessToken}`
+                },
+                credentials: 'include',
+            });
+            
+            if(!response.ok){
+                const message = await response.text();
+                this.setState({
+                    success: undefined,
+                    error: response.status,
+                    errorMessage: message
+                });
+            }
+            else{
+                this.setState({
+                    success: 'usunięto ocenę',
                     error: undefined,
                     errorMessage: undefined
                 });
@@ -165,9 +203,12 @@ class AddRateForm extends React.Component {
                         <input id='rate-description-input' type="text" className='s-input'></input>
                     </div>
                     <span>* - pola wymagane</span>
-                    <input id='add-rate-button' type="button" value={this.state?.override ? 'zmień ocenę' : 'oceń'} onClick={() => this.rate()} className='s-input'></input>
+                    <div>
+                        <input id='add-rate-button' type="button" value={this.state?.override ? 'zmień ocenę' : 'oceń'} onClick={() => this.rate()} className='s-input'></input>
+                        {this.state?.override ? <input id='add-rate-button' type="button" value='usuń' onClick={() => this.deleteRate()} className='s-input'></input> : ''}
+                    </div>
                     <span className='error-text'>{this.state?.error ? this.getErrorMessage(this.state.error) : ''}</span>
-                    <span className='success-text'>{this.state?.success ? 'wystawiono ocenę' : ''}</span>
+                    <span className='success-text'>{this.state?.success ? this.state.success : ''}</span>
                 </div>
             );
         }
