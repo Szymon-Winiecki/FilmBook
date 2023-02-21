@@ -36,7 +36,9 @@ class MovieDetails extends React.Component {
                     error
                 });
             }
-        );
+        ).then(() => {
+            this.fetchDirector();
+        });
     }
     
     fetchRates(){
@@ -63,6 +65,22 @@ class MovieDetails extends React.Component {
             (data) => {
                 this.setState({
                     genres: data
+                })
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+    fetchDirector(){
+        let url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/person/${this.state?.movie?.czlowiek_kina_id}`;
+        fetch(url)
+        .then((response) => response.json())
+        .then(
+            (data) => {
+                this.setState({
+                    director: data[0]
                 })
             },
             (error) => {
@@ -177,7 +195,7 @@ class MovieDetails extends React.Component {
     }
 
     render(){
-        const { error, isLoaded, movie, rates, genres } = this.state;
+        const { error, isLoaded, movie, rates, genres, director } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         }
@@ -203,7 +221,7 @@ class MovieDetails extends React.Component {
                                 <span>Czas trwania: </span>
                             </div>
                             <div className='movie-details-details-values'>
-                                <span>{movie.czlowiek_kina_id ? movie.czlowiek_kina_id : 'brak danych'}</span>
+                                <span>{director ? `${director.imie} ${director.nazwisko}` : 'brak danych'}</span>
                                 <span>{movie.data_swiatowej_premiery ? extractDateFromDate(movie.data_swiatowej_premiery) : 'brak danych'}</span>
                                 <span>{movie.data_polskiej_premiery ? extractDateFromDate(movie.data_polskiej_premiery) : 'brak danych'}</span>
                                 <span>{movie.czas_trwania ? minutesToHoursAndMinutes(movie.czas_trwania) : 'brak danych'}</span>

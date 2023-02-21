@@ -1,0 +1,11 @@
+.rank-add-site{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+  
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

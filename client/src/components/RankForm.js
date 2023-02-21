@@ -2,7 +2,10 @@ import React from 'react';
 
 import const_props from '../constant_properties';
 import { UserContext } from '../constant_properties';
+
 import '../style/RankForm.css';
+import '../style/inputs.css';
+
 import PermissionPicker from './PermissionPicker';
 
 class RankForm extends React.Component {
@@ -101,7 +104,7 @@ class RankForm extends React.Component {
                 <div key={permission.nazwa} className='permissions-list-row'>
                     <span className='permission-name'>{permission.nazwa} </span>
                     <span className='permission-description'>{permission.opis}</span>
-                    <input type="Button" id={permission.nazwa} defaultValue="Usuń" onClick={e => this.handlePermissionRemove(e)}></input>
+                    <input type="Button" className='s-input' id={permission.nazwa} defaultValue="Usuń" onClick={e => this.handlePermissionRemove(e)}></input>
                 </div>
             );
         });
@@ -132,7 +135,7 @@ class RankForm extends React.Component {
                 <div>
                     <label htmlFor="rank-permissions">Uprawnienia:</label>
                     {this.getPermissions()}
-                    <input type="Button" defaultValue="Dodaj uprawnienie" onClick={() => this.pickPermission()}></input>
+                    <input type="Button" className='s-input'  defaultValue="Dodaj uprawnienie" onClick={() => this.pickPermission()}></input>
                 </div>
                 
                 <div>
@@ -140,7 +143,7 @@ class RankForm extends React.Component {
                 </div>
 
                 <div>
-                    <input id='rank-form-submit-button' type="button" value={this.props.rank ? 'Aktualizuj' : 'Dodaj rangę'} onClick={() => this.submit()}></input>
+                    <input id='rank-form-submit-button' className='s-input' type="button" value={this.props.rank ? 'Aktualizuj' : 'Dodaj rangę'} onClick={() => this.submit()}></input>
                 </div>
             </div>
         );

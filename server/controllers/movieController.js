@@ -57,8 +57,11 @@ function getMovie(req, res){
 }
 
 function addMovie(req, res){
+    let data_swiatowej_premiery = req.body.data_swiatowej_premiery.length == 0 ? 'null' : `'${req.body.data_swiatowej_premiery}'`;
+    let data_polskiej_premiery = req.body.data_polskiej_premiery.length == 0 ? 'null' : `'${req.body.data_polskiej_premiery}'`;
+
     const query =   `insert into film(tytul_polski, tytul_orginalny, data_swiatowej_premiery, data_polskiej_premiery, czas_trwania, opis, czlowiek_kina_id) 
-                    values('${req.body.tytul_polski}', '${req.body.tytul_orginalny}', '${req.body.data_swiatowej_premiery}', '${req.body.data_polskiej_premiery}', ${req.body.czas_trwania}, '${req.body.opis}', ${req.body.czlowiek_kina_id}) returning *`;
+                    values('${req.body.tytul_polski}', '${req.body.tytul_orginalny}', ${data_swiatowej_premiery}, ${data_polskiej_premiery}, ${req.body.czas_trwania}, '${req.body.opis}', ${req.body.czlowiek_kina_id}) returning *`;
     database.query(query, (qerr, qres) => {
         if(qerr){
             console.error(qerr);

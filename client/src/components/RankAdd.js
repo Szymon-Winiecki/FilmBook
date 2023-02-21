@@ -2,6 +2,8 @@ import React from 'react';
 
 import RankForm from './RankForm'
 
+import '../style/RankAdd.css';
+
 class RankAdd extends React.Component {
 
     constructor(props){
