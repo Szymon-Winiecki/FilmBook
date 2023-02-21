@@ -110,8 +110,8 @@ class MoviesList extends React.Component {
                         <select id='sort-select' onChange={() => this.fetchMovies()}>
                             <option value='sortBy=srednia_ocen&sortDir=asc'>ocena (rosnąco)</option>
                             <option value='sortBy=srednia_ocen&sortDir=desc'>ocena (malejąco)</option>
-                            <option value='sortBy=tytul_polski&sortDir=asc'>tytuł (rosnąco)</option>
-                            <option value='sortBy=tytul_polski&sortDir=desc'>tytuł (malejąco)</option>
+                            <option value='sortBy=tytul_orginalny&sortDir=asc'>tytuł (rosnąco)</option>
+                            <option value='sortBy=tytul_orginalny&sortDir=desc'>tytuł (malejąco)</option>
                         </select>
                     </div>
                 </div>

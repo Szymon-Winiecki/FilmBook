@@ -41,6 +41,10 @@
     font-size: 20pt;
 }
 
+.bi-box-arrow-right{
+    font-size: 20pt;
+}
+
 .user-section-logout:hover, .user-section-login:hover, .user-section-register:hover{
     color: var(--primary-text3-color);
 }
