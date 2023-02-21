@@ -77,6 +77,10 @@ class MovieDetails extends React.Component {
         this.fetchRates();
     }
 
+    deleteMovie() {
+        console.log('delete movie');
+    }
+
     componentDidMount(){
         this.fetchAll();
     }
@@ -119,6 +123,12 @@ class MovieDetails extends React.Component {
         });
 
         return ratesList;
+    }
+
+    changeSite(site) {
+        if(document.location.hash != site) {
+            document.location.hash = site;
+        }
     }
 
     render(){
@@ -164,9 +174,10 @@ class MovieDetails extends React.Component {
                             <i className="bi bi-star-fill"></i>
                             <span> {movie.srednia_ocen ? parseFloat(movie.srednia_ocen).toFixed(1) : '?'} / 10</span>
                         </div>
+                        <input type='button' value='Edytuj film' id='edit-movie-button' className='s-input' onClick={() => {this.changeSite(`#edit/movie/${movie.id}`)}}/>
+                        <input type='button' value='Usuń film' id='delete-movie-button' className='s-input' onClick={() => this.deleteMovie()}/>
                     </div>
                     
-                   
                 </div>
             );
         }

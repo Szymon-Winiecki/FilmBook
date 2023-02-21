@@ -71,6 +71,10 @@ class RankDetails extends React.Component {
         );
     }
 
+    deleteRank() {
+        console.log('delete rank');
+    }
+
     componentDidMount(){
         this.fetchRank();
         this.fetchRankPermissions();
@@ -99,6 +103,12 @@ class RankDetails extends React.Component {
         return p;
     }
 
+    changeSite(site) {
+        if(document.location.hash != site) {
+            document.location.hash = site;
+        }
+    }
+
     render(){
         if (this.state.error) {
             return <div>Error: {this.state.error.message}</div>;
@@ -108,6 +118,8 @@ class RankDetails extends React.Component {
                 <div className="rank-details-site">
                     <h1>{this.state.rank.nazwa}</h1>
                     {this.getPermissions()}
+                    <input type='button' value='Edytuj rangę' className='s-input' onClick={() => {this.changeSite(`#edit/rank/${this.state.rank.id}`)}}/>
+                    <input type='button' value='Usuń rangę' className='s-input' onClick={() => this.deleteRank()}/>
                 </div>
             );
         }

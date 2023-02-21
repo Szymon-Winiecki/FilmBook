@@ -144,3 +144,12 @@
     width: 100%;
     text-align: right;
 }
+
+#edit-movie-button{
+    margin-top: 20pt;
+    margin-bottom: 10pt;
+}
+
+#delete-movie-button{
+    background-color: red;
+}

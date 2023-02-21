@@ -84,10 +84,17 @@ class MoviesList extends React.Component {
         this.fetchGenres();
     }
 
+    changeSite(site) {
+        if(document.location.hash != site) {
+            document.location.hash = site;
+        }
+    }
+
     render(){
         return (
             <div className='movies-list-site'>
-                <h1 className='section-title'>{this.props.edit ? "Zarządzanie filmami" : "Filmy"}</h1>
+                <h1 className='section-title'>Filmy</h1>
+                <input type='button' value='Dodaj film' className='s-input' onClick={() => {this.changeSite('#add/movie')}}/>
                 <div className='movie-list-controlls'>
                     <div className='list-controll'>
                         <label htmlFor='genre-select' className='list-control-label'>Gatunek: </label>

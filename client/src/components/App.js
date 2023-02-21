@@ -39,7 +39,6 @@ const sites = {
     PERSON_ADD: '#add/person',
     PERSON_EDIT: '#edit/person',
     USERS_LIST: '#users',
-    MOVIES_EDIT: '#edit/movies',
     RANKS_LIST: '#ranks',
     RANK_DETAILS: '#rank',
     RANK_ADD: '#add/rank',
@@ -156,9 +155,6 @@ class App extends React.Component {
         }
         else if(this.state.site == sites.USERS_LIST){
             return <UsersList />;
-        }
-        else if(this.state.site == sites.MOVIES_EDIT){
-            return <MoviesList edit={true} />;
         }
         else if(this.state.site == sites.RANKS_LIST){
             return <RanksList />;
