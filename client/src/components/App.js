@@ -180,7 +180,7 @@ class App extends React.Component {
         else if(this.state.site == sites.USERS_LIST){
             if (!this.state.user.accessToken)
                 this.changeSite('#login');
-            else if (this.state.user.permissions.includes('get_users'))
+            else if (this.state.user.permissions.includes('get_users') && this.state.user.permissions.includes('get_ranks'))
                 return <UsersList />;
             else
                 return <AccessDenied />;

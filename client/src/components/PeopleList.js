@@ -61,8 +61,8 @@ class PeopleList extends React.Component {
                 {this.context?.permissions?.includes('add_person') ? 
                     <input type='button' value='Dodaj osobę' className='s-input' onClick={() => {this.changeSite('#add/person')}}/>
                 : ''}
-                {/* <div className='person-list-controlls'>
-                    <div className='list-controll'>
+                <div className='person-list-controlls'>
+                    {/* <div className='list-controll'>
                         <label htmlFor='sort-select' className='list-control-label'>Sortuj wg: </label>
                         <select id='sort-select' onChange={() => this.fetchPeople()}>
                             <option value='sortBy=imie&sortDir=asc'>imie (rosnąco)</option>
@@ -70,8 +70,12 @@ class PeopleList extends React.Component {
                             <option value='sortBy=nazwisko&sortDir=asc'>nazwisko (rosnąco)</option>
                             <option value='sortBy=nazwisko&sortDir=desc'>nazwisko (malejąco)</option>
                         </select>
-                    </div>
-                </div> */}
+                    </div> */}
+                    {/* <div className='list-controll'>
+                        <label htmlFor='person-search' className='list-control-label'>Wyszukaj: </label>
+                        <input type='text' id='person-search' className='s-input'></input>
+                    </div> */}
+                </div>
                 <div className='people-list-container'>
                     <div className='people-list-header'>
                         <div className='no-header'>lp.</div>

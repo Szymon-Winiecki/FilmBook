@@ -26,10 +26,10 @@ class UserPanel extends React.Component {
                         <div className='user-panel-section'> <ChangePasswordForm /> </div>
                     </div>
                     <div className='user-panel'>
-                        {this.context?.permissions?.includes('get_users') || this.context?.permissions?.includes('get_ranks')  ? 
+                        {this.context?.permissions?.includes('get_ranks')  ? 
                             <h2>Panel administratora</h2>
                         : ''}
-                        {this.context?.permissions?.includes('get_users') ? 
+                        {this.context?.permissions?.includes('get_users') && this.context?.permissions?.includes('get_ranks') ? 
                             <div className='user-panel-section'> 
                                 <input type='button' value='zarządzaj użytkownikami' className='s-input' onClick={() => {this.changeSite('#users')}}/>
                             </div>

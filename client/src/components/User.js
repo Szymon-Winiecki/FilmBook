@@ -52,14 +52,20 @@ class User extends React.Component {
                     <span className='user-email'>{ this.props.user.email }</span>
                 </div>
 
+                {this.context?.permissions?.includes('alter_user_rank') ? 
+                    <div className='rank-field'>
+                        <select onChange={(selected) => this.changeRank(selected)}>
+                            <option key={this.props.user.ranga_id} value={this.props.user.ranga_id}>{this.props.user.ranga_nazwa}</option>
+                            {this.getOtherRanks(this.props.user.ranga_id)}
+                        </select>
+                    </div>
+                :
                 <div className='rank-field'>
-                    <select onChange={(selected) => this.changeRank(selected)}>
-                        <option key={this.props.user.ranga_id} value={this.props.user.ranga_id}>{this.props.user.ranga_nazwa}</option>
-                        {this.getOtherRanks(this.props.user.ranga_id)}
-                    </select>
-                </div>
+                        <span className='user-rank'>{this.props.user.ranga_nazwa}</span>
+                    </div> 
+                }
 
-                {this.context?.permissions?.includes('delete_movie') ? 
+                {this.context?.permissions?.includes('delete_user') ? 
                     <div className='delete-user-field'>
                         <input type="button" id={this.props.user.id} defaultValue="Usuń" onClick={e => {e.preventDefault(); this.props.onDeleteUser(e.target.id)}}></input>
                     </div>
