@@ -154,7 +154,9 @@ class GenresPicker extends React.Component {
                 <div key={genre.id} className='picker-list-row' onClick={() => this.toggleSelection(genre)}>
                     <i className={genre.selected ? 'bi bi-check-circle-fill' : 'bi bi-circle'}></i>
                     <span className='picker-row-label'>{genre.nazwa}</span>
-                    <i className="bi bi-x-circle" onClick={(e) => {e.stopPropagation(); this.deleteGenre(genre)}}></i>
+                    {this.context?.permissions?.includes('delete_genre') ? 
+                        <i className="bi bi-x-circle" onClick={(e) => {e.stopPropagation(); this.deleteGenre(genre)}}></i>
+                    : ''}
                 </div>
             );
         });
@@ -167,10 +169,12 @@ class GenresPicker extends React.Component {
                 <div className='picker-list'>
                     {this.getGenres()}
                 </div>
-                <div className='picker-add-option'>
-                    <input id='new-genre-name' type='text' className='s-input' placeholder='nowy gatunek'/>
-                    <i className="bi bi-plus-circle" onClick={() => this.addNewGenre()}></i>
-                </div>
+                {this.context?.permissions?.includes('add_genre') ?
+                    <div className='picker-add-option'>
+                        <input id='new-genre-name' type='text' className='s-input' placeholder='nowy gatunek'/>
+                        <i className="bi bi-plus-circle" onClick={() => this.addNewGenre()}></i>
+                    </div>
+                : ''}
                 <div className='picker-errors'>
                     {this.state.error}
                 </div>
