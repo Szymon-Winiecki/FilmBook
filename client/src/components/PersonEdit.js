@@ -62,7 +62,7 @@ class PersonEdit extends React.Component {
         else if (person) {
             return (
                 <div className="person-edit-site">
-                    <h1>Edytuj osobę {this.props.personId}</h1>
+                    <h1>Edytuj osobę</h1>
                     {this.state.form}
                 </div>
             );

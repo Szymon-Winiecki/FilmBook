@@ -1,0 +1,38 @@
+.person-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    row-gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.person-form>div{
+    width: 50%;
+    min-width: 400px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+.person-form>div>input:not([type='button']), textarea{
+    width: 60%;
+    min-width: 200px;
+}
+
+textarea{
+    height: 120px;
+}
+
+.person-form .error-text{
+    max-width: 300px;
+    color: var(--main-text-error-color);
+    font-weight: 600;
+}
+
+.person-form .success-text{
+    font-weight: 600;
+}

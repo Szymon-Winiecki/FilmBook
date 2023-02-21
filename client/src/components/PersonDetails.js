@@ -1,6 +1,7 @@
 import React from 'react';
 
 import const_props, { UserContext } from '../constant_properties';
+import { extractDateFromDate } from '../helpers/helpers';
 import '../style/PersonDetails.css';
 
 class PersonDetails extends React.Component {
@@ -83,9 +84,15 @@ class PersonDetails extends React.Component {
             return (
                 <div className="person-details-site">
                     <h1>{person.imie} {person.nazwisko}</h1>
-                    <span>{person.opis}</span>
-                    <input type='button' value='Edytuj osobę' className='s-input' onClick={() => {this.changeSite(`#edit/person/${person.id}`)}}/>
-                    <input type='button' value='Usuń osobę' className='s-input' onClick={() => this.deletePerson()}/>
+                    <div className='person-details'>
+                        <span className='person-details-label'>data urodzenia: </span>
+                        <span>{person.data_urodzenia ? extractDateFromDate(person.data_urodzenia) : 'brak danych'}</span>
+                    </div>
+                    <span className='person-description'>{person.opis}</span>
+                    <div className='buttons-section'>
+                        <input type='button' value='Edytuj osobę' className='s-input' onClick={() => {this.changeSite(`#edit/person/${person.id}`)}}/>
+                        <input type='button' value='Usuń osobę' className='s-input' onClick={() => this.deletePerson()}/>
+                    </div>
                 </div>
             );
         }

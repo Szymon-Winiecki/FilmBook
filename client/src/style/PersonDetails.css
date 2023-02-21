@@ -1,0 +1,28 @@
+.person-details-site{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+  
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.person-description, .person-details{
+    margin-top: 20px;
+    margin-left: 100px;
+}
+
+.person-details-label{
+    font-weight: 600;
+}
+
+.buttons-section{
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+}
