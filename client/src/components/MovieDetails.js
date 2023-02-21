@@ -1,7 +1,7 @@
 import React from 'react';
 
 import const_props, { UserContext } from '../constant_properties';
-import {extractYearFromDate} from '../helpers/helpers'
+import {extractYearFromDate, extractDateFromDate, minutesToHoursAndMinutes} from '../helpers/helpers'
 
 import '../style/MovieDetails.css';
 import '../style/inputs.css';
@@ -149,9 +149,9 @@ class MovieDetails extends React.Component {
                             </div>
                             <div className='movie-details-details-values'>
                                 <span>{movie.czlowiek_kina_id ? movie.czlowiek_kina_id : 'brak danych'}</span>
-                                <span>{movie.data_swiatowej_premiery ? movie.data_swiatowej_premiery : 'brak danych'}</span>
-                                <span>{movie.data_polskiej_premiery ? movie.data_polskiej_premiery : 'brak danych'}</span>
-                                <span>{movie.czas_trwania ? movie.czas_trwania : 'brak danych'}</span>
+                                <span>{movie.data_swiatowej_premiery ? extractDateFromDate(movie.data_swiatowej_premiery) : 'brak danych'}</span>
+                                <span>{movie.data_polskiej_premiery ? extractDateFromDate(movie.data_polskiej_premiery) : 'brak danych'}</span>
+                                <span>{movie.czas_trwania ? minutesToHoursAndMinutes(movie.czas_trwania) : 'brak danych'}</span>
                             </div>
                         </div>
                         <h2>Oceny widzów:</h2>
