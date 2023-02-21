@@ -1,6 +1,7 @@
 import React from 'react';
 
 import const_props from '../constant_properties';
+import { UserContext } from '../constant_properties';
 import Person from './Person'
 import '../style/PeopleList.css';
 
@@ -57,7 +58,9 @@ class PeopleList extends React.Component {
         return (
             <div className='people-list-site'>
                 <h1 className='section-title'>Ludzie kina</h1>
-                <input type='button' value='Dodaj osobę' className='s-input' onClick={() => {this.changeSite('#add/person')}}/>
+                {this.context?.permissions?.includes('add_person') ? 
+                    <input type='button' value='Dodaj osobę' className='s-input' onClick={() => {this.changeSite('#add/person')}}/>
+                : ''}
                 <div className='person-list-controlls'>
                     <div className='list-controll'>
                         <label htmlFor='sort-select' className='list-control-label'>Sortuj wg: </label>
@@ -83,5 +86,6 @@ class PeopleList extends React.Component {
         );
     }
 }
+PeopleList.contextType = UserContext;
 
 export default PeopleList;

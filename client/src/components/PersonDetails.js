@@ -90,8 +90,12 @@ class PersonDetails extends React.Component {
                     </div>
                     <span className='person-description'>{person.opis}</span>
                     <div className='buttons-section'>
-                        <input type='button' value='Edytuj osobę' className='s-input' onClick={() => {this.changeSite(`#edit/person/${person.id}`)}}/>
-                        <input type='button' value='Usuń osobę' className='s-input' onClick={() => this.deletePerson()}/>
+                        {this.context?.permissions?.includes('alter_person') ? 
+                            <input type='button' value='Edytuj osobę' className='s-input' onClick={() => {this.changeSite(`#edit/person/${person.id}`)}}/>
+                        : ''}
+                        {this.context?.permissions?.includes('delete_person') ? 
+                            <input type='button' value='Usuń osobę' className='s-input' onClick={() => this.deletePerson()}/>
+                        : ''}
                     </div>
                 </div>
             );

@@ -118,8 +118,12 @@ class RankDetails extends React.Component {
                 <div className="rank-details-site">
                     <h1>{this.state.rank.nazwa}</h1>
                     {this.getPermissions()}
-                    <input type='button' value='Edytuj rangę' className='s-input' onClick={() => {this.changeSite(`#edit/rank/${this.state.rank.id}`)}}/>
-                    <input type='button' value='Usuń rangę' className='s-input' onClick={() => this.deleteRank()}/>
+                    {this.context?.permissions?.includes('alter_rank') ? 
+                        <input type='button' value='Edytuj rangę' className='s-input' onClick={() => {this.changeSite(`#edit/rank/${this.state.rank.id}`)}}/>
+                    : ''}
+                    {this.context?.permissions?.includes('delete_rank') ? 
+                        <input type='button' value='Usuń rangę' className='s-input' onClick={() => this.deleteRank()}/>
+                    : ''}
                 </div>
             );
         }

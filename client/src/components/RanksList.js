@@ -67,7 +67,9 @@ class RanksList extends React.Component {
         return (
             <div className='ranks-list-site'>
                 <h1 className='section-title'>Rangi</h1>
-                <input type='button' value='Dodaj rangę' className='s-input' onClick={() => {this.changeSite('#add/rank')}}/>
+                {this.context?.permissions?.includes('add_rank') ? 
+                    <input type='button' value='Dodaj rangę' className='s-input' onClick={() => {this.changeSite('#add/rank')}}/>
+                : ''}
                 <div className='rank-list-controlls'>
                     <div className='list-controll'>
                         <label htmlFor='sort-select' className='list-control-label'>Sortuj wg: </label>

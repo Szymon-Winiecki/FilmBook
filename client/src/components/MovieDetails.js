@@ -174,8 +174,12 @@ class MovieDetails extends React.Component {
                             <i className="bi bi-star-fill"></i>
                             <span> {movie.srednia_ocen ? parseFloat(movie.srednia_ocen).toFixed(1) : '?'} / 10</span>
                         </div>
-                        <input type='button' value='Edytuj film' id='edit-movie-button' className='s-input' onClick={() => {this.changeSite(`#edit/movie/${movie.id}`)}}/>
-                        <input type='button' value='Usuń film' id='delete-movie-button' className='s-input' onClick={() => this.deleteMovie()}/>
+                        {this.context?.permissions?.includes('alter_movie') ? 
+                            <input type='button' value='Edytuj film' id='edit-movie-button' className='s-input' onClick={() => {this.changeSite(`#edit/movie/${movie.id}`)}}/>
+                        : ''}
+                        {this.context?.permissions?.includes('delete_movie') ? 
+                            <input type='button' value='Usuń film' id='delete-movie-button' className='s-input' onClick={() => this.deleteMovie()}/>
+                        : ''}
                     </div>
                     
                 </div>

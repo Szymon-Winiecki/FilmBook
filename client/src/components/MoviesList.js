@@ -1,6 +1,7 @@
 import React from 'react';
 
 import const_props from '../constant_properties';
+import { UserContext } from '../constant_properties';
 import '../style/MoviesList.css';
 import Movie from './Movie';
 
@@ -94,7 +95,9 @@ class MoviesList extends React.Component {
         return (
             <div className='movies-list-site'>
                 <h1 className='section-title'>Filmy</h1>
-                <input type='button' value='Dodaj film' className='s-input' onClick={() => {this.changeSite('#add/movie')}}/>
+                {this.context?.permissions?.includes('add_movie') ? 
+                    <input type='button' value='Dodaj film' className='s-input' onClick={() => {this.changeSite('#add/movie')}}/>
+                : ''}
                 <div className='movie-list-controlls'>
                     <div className='list-controll'>
                         <label htmlFor='genre-select' className='list-control-label'>Gatunek: </label>
@@ -126,5 +129,6 @@ class MoviesList extends React.Component {
         );
     }
 }
+MoviesList.contextType = UserContext;
 
 export default MoviesList;
