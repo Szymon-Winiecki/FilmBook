@@ -58,6 +58,12 @@ class User extends React.Component {
                         {this.getOtherRanks(this.props.user.ranga_id)}
                     </select>
                 </div>
+
+                {this.context?.permissions?.includes('delete_movie') ? 
+                    <div className='delete-user-field'>
+                        <input type="button" id={this.props.user.id} defaultValue="Usuń" onClick={e => {e.preventDefault(); this.props.onDeleteUser(e.target.id)}}></input>
+                    </div>
+                : ''}
             </div>
         );
     }

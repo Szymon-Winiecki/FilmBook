@@ -153,3 +153,16 @@
 #delete-movie-button{
     background-color: red;
 }
+
+.rate-container>i.bi-x-circle{
+    width: 8%;
+}
+
+.rate-container>i.bi-x-circle:hover::before{
+    content: '\F622';
+    color: var(--main-text-error-color);
+}
+
+.rate-container>i.bi-plus-circle:hover::before{
+    content: '\F4F9';
+}

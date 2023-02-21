@@ -63,12 +63,33 @@ class UsersList extends React.Component {
         this.fetchRanks();
     }
 
+    handleUserDelete = (userId) => {
+        const url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/user/${userId}`;
+        fetch(url, {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include'
+        })
+        .then((response) => {
+            if (response.status == 500)
+                console.log("nie mozna uzunac uzytkownika");
+            else if (response.status == 200)
+                window.location.reload(false); // reload page
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
     getUsers() {
         let u = [];
         this.state.users.forEach((user, i) => {
             user.no = i + 1;
             u.push(
-                <User user={user} ranks={this.state.ranks} key={user.id}/>
+                <User user={user} ranks={this.state.ranks} key={user.id} onDeleteUser={this.handleUserDelete}/>
             );
         });
         return u;
@@ -79,7 +100,7 @@ class UsersList extends React.Component {
             return (
                 <div className='users-list-site'>
                     <h1 className='section-title'>Użytkownicy</h1>
-                    <div className='user-list-controlls'>
+                    {/* <div className='user-list-controlls'>
                         <div className='list-controll'>
                             <label htmlFor='rank-select' className='list-control-label'>Ranga: </label>
                             <select id='rank-select'>
@@ -93,7 +114,7 @@ class UsersList extends React.Component {
                                 <option value='rate_desc'>nazwa (malejąco)</option>
                             </select>
                         </div>
-                    </div>
+                    </div> */}
     
                     <div className='movies-list-container'>
                         <div className='users-list-header'>

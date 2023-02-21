@@ -21,6 +21,6 @@ router.post('/', authentication, rateController.addRate);
 
 router.put('/', authentication, rateController.updateRate);
 
-router.delete('/', authentication, rateController.deleteRate);
+router.delete('/:id', authentication, authorization('delete_rate'), rateController.deleteRate);
 
 module.exports = router;

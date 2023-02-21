@@ -45,7 +45,15 @@ function updateUserRank(req, res){
 }
 
 function deleteUser(req, res){
-    res.status(200).json( {function: 'delete user'} );
+    const query = `delete from uzytkownik where id = ${req.params.id};`;
+    database.query(query, (qerr, qres) => {
+        if(qerr){
+            console.error(qerr);
+            console.error(query);
+            return res.sendStatus(500);
+        }
+        res.sendStatus(200);
+    })
 }
 
 function getOwnPermissions(req, res){

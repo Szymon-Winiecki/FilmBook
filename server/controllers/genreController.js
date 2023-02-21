@@ -39,7 +39,7 @@ function getGenresOfMovie(req, res){
             return res.sendStatus(500);
         }
         if(qres.rows.length == 0){
-            return res.sendStatus(404);
+            // return res.sendStatus(404);
         }
         res.status(200).json(qres.rows);
     });

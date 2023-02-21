@@ -44,6 +44,12 @@ class RankForm extends React.Component {
         );
     }
 
+    changeSite(site) {
+        if(document.location.hash != site) {
+            document.location.hash = site;
+        }
+    }
+
     submit() {
         let rankData = {
             'nazwa': document.querySelector('#rank-name').value,
@@ -58,7 +64,10 @@ class RankForm extends React.Component {
                 },
                 credentials: 'include',
                 body: JSON.stringify(rankData)
-            });
+            })
+        .then(() => {
+            this.changeSite('#ranks');
+        });
     }
 
     componentDidMount(){

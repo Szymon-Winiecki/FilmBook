@@ -72,7 +72,24 @@ class RankDetails extends React.Component {
     }
 
     deleteRank() {
-        console.log('delete rank');
+        const url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rank/${this.props.rankId}`;
+        fetch(url, {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include'
+        })
+        .then((response) => {
+            if (response.status == 500)
+                console.log("nie mozna uzunac rangi");
+            else if (response.status == 200)
+                this.changeSite('#ranks');
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     componentDidMount(){

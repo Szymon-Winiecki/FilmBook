@@ -4,7 +4,7 @@ const usersTableInfo = require('../database_info/usersTableInfo');
 const schemas = require('../validation/rateSchemas');
 
 function getAllRatesForMovie(req, res){
-    const query = `SELECT ${ratesTableInfo.rateField}, ${ratesTableInfo.descriptionField}, ${usersTableInfo.usernameField} as autor 
+    const query = `SELECT ${ratesTableInfo.tableName}.${ratesTableInfo.idField} as rateid, ${ratesTableInfo.rateField}, ${ratesTableInfo.descriptionField}, ${usersTableInfo.usernameField} as autor 
                     FROM ${ratesTableInfo.tableName} JOIN ${usersTableInfo.tableName} ON ${ratesTableInfo.tableName}.${ratesTableInfo.useridField} = ${usersTableInfo.tableName}.${usersTableInfo.idField} 
                     WHERE ${ratesTableInfo.movieIdField} = ${req.params.id}`;
 
@@ -108,7 +108,15 @@ function deleteOwnRateOfMovie(req, res){
 }
 
 function deleteRate(req, res){
-
+    const query = `DELETE FROM ${ratesTableInfo.tableName} WHERE ${ratesTableInfo.idField} = ${req.params.id} returning *;`
+    database.query(query, (qerr, qres) => {
+        if(qerr){
+            console.error(qerr);
+            console.error(query);
+            return res.sendStatus(500);
+        }
+        res.status(200).json(qres.rows);
+    });
 }
 
 

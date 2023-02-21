@@ -176,7 +176,7 @@ ALTER TABLE ocena
 
 ALTER TABLE ocena
     ADD CONSTRAINT ocena_uzytkownik_fk FOREIGN KEY ( uzytkownik_id )
-        REFERENCES uzytkownik ( id );
+        REFERENCES uzytkownik ( id ) ON DELETE CASCADE;
 
 ALTER TABLE odcinek
     ADD CONSTRAINT odcinek_sezon_fk FOREIGN KEY ( sezon_id )
@@ -192,7 +192,7 @@ ALTER TABLE uprawnienia_rang
 
 ALTER TABLE gatunki_filmow
     ADD CONSTRAINT gatunki_filmow_film_fk FOREIGN KEY ( film_id )
-        REFERENCES film ( id );
+        REFERENCES film ( id ) ON DELETE CASCADE;
 
 ALTER TABLE gatunki_filmow
     ADD CONSTRAINT gatunki_filmow_gatunek_fk FOREIGN KEY ( gatunek_id )
@@ -239,6 +239,7 @@ insert into uprawnienie values ('delete_user', 'usuwanie uzytkownika');
 insert into uprawnienie values ('add_genre', 'dodawanie gatunku');
 insert into uprawnienie values ('alter_genre', 'edytowanie gatunku');
 insert into uprawnienie values ('delete_genre', 'usuwanie gatunku');
+insert into uprawnienie values ('delete_rate', 'usuwanie oceny');
 
 
 -- uprawnienia do bazy danych

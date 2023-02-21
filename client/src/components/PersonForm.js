@@ -9,6 +9,12 @@ class PersonForm extends React.Component {
         super(props);
     }
 
+    changeSite(site) {
+        if(document.location.hash != site) {
+            document.location.hash = site;
+        }
+    }
+
     submit() {
         let personData = {
             'imie': document.querySelector('#person-first-name').value,
@@ -25,7 +31,10 @@ class PersonForm extends React.Component {
                 },
                 credentials: 'include',
                 body: JSON.stringify(personData)
-            });
+            })
+        .then(() => {
+            this.changeSite('#people');
+        });
     }
 
     render(){

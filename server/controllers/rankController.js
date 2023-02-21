@@ -86,7 +86,7 @@ function updateRank(req, res){
 }
 
 function deleteRank(req, res){
-    const query = `delete from ranga where id = ${this.params.id};`;
+    const query = `delete from ranga where id = ${req.params.id};`;
     // cascade delete ranga_uprawnienia
     database.query(query, (qerr, qres) => {
         if(qerr){

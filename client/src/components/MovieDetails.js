@@ -78,7 +78,24 @@ class MovieDetails extends React.Component {
     }
 
     deleteMovie() {
-        console.log('delete movie');
+        const url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/movie/${this.props.movieId}`;
+        fetch(url, {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include'
+        })
+        .then((response) => {
+            if (response.status == 500)
+                console.log("nie mozna uzunac filmu");
+            else if (response.status == 200)
+                this.changeSite('#movies');
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     componentDidMount(){
@@ -108,6 +125,31 @@ class MovieDetails extends React.Component {
         return genresList;
     }
 
+    deleteRate(rate) {
+        const url = `http://${const_props.API_ADDR}:${const_props.API_PORT}/api/rate/${rate.rateid}`;
+        fetch(url, {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authentication: `Bearer ${this.context.accessToken}`
+            },
+            credentials: 'include'
+        })
+        .then((response) => {
+            if (response.status == 500)
+                console.log("nie mozna uzunac oceny");
+            else if (response.status == 200) {
+                window.location.reload(false); // reload page
+            }
+            else {
+
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
     getRates(rates){
         if(!rates || rates?.length == 0){
             return 'Brak ocen';
@@ -119,6 +161,9 @@ class MovieDetails extends React.Component {
                 <span className='rate-rate'>{rate.ocena} / 10 <i className="bi bi-star-fill"></i></span>
                 <span className='rate-description'>{rate.uzasadnienie}</span>
                 <span className='rate-author'>{rate.autor}</span>
+                {this.context?.permissions?.includes('delete_rate') ? 
+                    <i className="bi bi-x-circle" onClick={(e) => {e.stopPropagation(); this.deleteRate(rate)}}></i>
+                : ''}
             </div>);
         });
 
