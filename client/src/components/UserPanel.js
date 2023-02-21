@@ -20,34 +20,25 @@ class UserPanel extends React.Component {
     render(){
         return (
             <div className="user-panel-site">
-                {/* {this.state?.ranks?.includes('User') ?  */}
                     <div className='user-panel'>
                         <h2>Panel użytkownika</h2>
                         <h3>Zmiana hasła</h3>
                         <div className='user-panel-section'> <ChangePasswordForm /> </div>
                     </div>
-                 {/* : ''} */}
-                {/* {this.state?.ranks?.includes('Editor') ?  */}
                     <div className='user-panel'>
-                        <h2>Panel edytora</h2>
-                        <div className='user-panel-section'> 
-                            <input type='button' value='zarządzaj filmami' className='s-input' onClick={() => {this.changeSite('#edit/movies')}}/>
-                        </div>
-                        <div className='user-panel-section'> 
-                            <input type='button' value='zarządzaj serialami' className='s-input'/>
-                        </div>
-                    </div>
-                 {/* : ''} */}
-                    <div className='user-panel'>
-                        <h2>Panel administratora</h2>
+                        {this.context?.permissions?.includes('get_users') || this.context?.permissions?.includes('get_ranks')  ? 
+                            <h2>Panel administratora</h2>
+                        : ''}
                         {this.context?.permissions?.includes('get_users') ? 
                             <div className='user-panel-section'> 
                                 <input type='button' value='zarządzaj użytkownikami' className='s-input' onClick={() => {this.changeSite('#users')}}/>
                             </div>
                         : ''}
-                        <div className='user-panel-section'> 
-                            <input type='button' value='zarządzaj rangami' className='s-input' onClick={() => {this.changeSite('#ranks')}}/>
-                        </div>
+                        {this.context?.permissions?.includes('get_ranks') ? 
+                            <div className='user-panel-section'> 
+                                <input type='button' value='zarządzaj rangami' className='s-input' onClick={() => {this.changeSite('#ranks')}}/>
+                            </div>
+                        : ''}
                     </div>
             </div>
         );

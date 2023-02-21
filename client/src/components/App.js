@@ -24,6 +24,7 @@ import RanksList from './RanksList';
 import RankDetails from './RankDetails';
 import RankAdd from './RankAdd';
 import RankEdit from './RankEdit';
+import AccessDenied from './AccessDenied';
 
 
 const sites = {
@@ -133,40 +134,88 @@ class App extends React.Component {
             return <RegisterForm onLogin={() => this.changeSite(sites.LOGIN_FORM)} />;
         }
         else if(this.state.site == sites.USER_PANEL){
-            return <UserPanel />
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else
+                return <UserPanel />;
         }
         else if(this.state.site.substring(0,7) == sites.MOVIE_DETAILS + '/'){
             return <MovieDetails movieId={this.state.site.substring(7)}/>;
         }
         else if(this.state.site == sites.MOVIE_ADD){
-            return <MovieAdd />;
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else if (this.state.user.permissions.includes('add_movie'))
+                return <MovieAdd />;
+            else
+                return <AccessDenied />;
         }
         else if(this.state.site.substring(0,12) == sites.MOVIE_EDIT + '/'){
-            return <MovieEdit movieId={this.state.site.substring(12)}/>;
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else if (this.state.user.permissions.includes('alter_movie'))
+                return <MovieEdit movieId={this.state.site.substring(12)}/>;
+            else
+                return <AccessDenied />;
         }
         else if(this.state.site.substring(0,8) == sites.PERSON_DETAILS + '/'){
             return <PersonDetails personId={this.state.site.substring(8)}/>;
         }
         else if(this.state.site == sites.PERSON_ADD){
-            return <PersonAdd />;
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else if (this.state.user.permissions.includes('add_person'))
+                return <PersonAdd />;
+            else
+                return <AccessDenied />;
         }
         else if(this.state.site.substring(0,13) == sites.PERSON_EDIT + '/'){
-            return <PersonEdit personId={this.state.site.substring(13)}/>;
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else if (this.state.user.permissions.includes('alter_person'))
+                return <PersonEdit personId={this.state.site.substring(13)}/>;
+            else
+                return <AccessDenied />;
         }
         else if(this.state.site == sites.USERS_LIST){
-            return <UsersList />;
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else if (this.state.user.permissions.includes('get_users'))
+                return <UsersList />;
+            else
+                return <AccessDenied />;
         }
         else if(this.state.site == sites.RANKS_LIST){
-            return <RanksList />;
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else if (this.state.user.permissions.includes('get_ranks'))
+                return <RanksList />;
+            else
+                return <AccessDenied />;
         }
         else if(this.state.site.substring(0, 6) == sites.RANK_DETAILS + '/'){
-            return <RankDetails rankId={this.state.site.substring(6)}/>;
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else if (this.state.user.permissions.includes('get_rank') && this.state.user.permissions.includes('get_rank_permissions'))
+                return <RankDetails rankId={this.state.site.substring(6)}/>;
+            else
+                return <AccessDenied />;
         }
         else if(this.state.site == sites.RANK_ADD){
-            return <RankAdd />;
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else if (this.state.user.permissions.includes('add_rank') && this.state.user.permissions.includes('get_permissions'))
+                return <RankAdd />;
+            else
+                return <AccessDenied />;
         }
         else if(this.state.site.substring(0,11) == sites.RANK_EDIT + '/'){
-            return <RankEdit rankId={this.state.site.substring(11)} />;
+            if (!this.state.user.accessToken)
+                this.changeSite('#login');
+            else if (this.state.user.permissions.includes('alter_rank') && this.state.user.permissions.includes('get_permissions'))
+                return <RankEdit rankId={this.state.site.substring(11)} />;
+            else
+                return <AccessDenied />;
         }
         else{
             return <h1>404</h1>
