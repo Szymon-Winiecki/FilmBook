@@ -124,12 +124,7 @@ class AddRateForm extends React.Component {
             });
             
             if(!response.ok){
-                const message = await response.text();
-                this.setState({
-                    success: false,
-                    error: response.status,
-                    errorMessage: message
-                });
+                
             }
             else{
                 const data = await response.json();

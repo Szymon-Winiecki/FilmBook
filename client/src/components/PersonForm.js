@@ -33,30 +33,30 @@ class PersonForm extends React.Component {
             <div className="person-form">
                 <div>
                     <label htmlFor="person-first-name">Imie:</label>
-                    <input type="text" id="person-first-name" key={this.props.person ? this.props.person.id : ""}
+                    <input type="text" id="person-first-name" className='s-input' key={this.props.person ? this.props.person.id : ""}
                         defaultValue={this.props.person ? this.props.person.imie : ""} />
                 </div>
 
                 <div>
                     <label htmlFor="person-last-name">Nazwisko:</label>
-                    <input type="text" id="person-last-name" key={this.props.person ? this.props.person.id : ""}
+                    <input type="text" id="person-last-name" className='s-input' key={this.props.person ? this.props.person.id : ""}
                         defaultValue={this.props.person ? this.props.person.nazwisko : ""} />
                 </div>
 
                 <div>
                     <label htmlFor="person-date-of-birth">Data urodzenia:</label>
-                    <input type="date" id="person-date-of-birth" key={this.props.person ? this.props.person.id : ""}
+                    <input type="date" id="person-date-of-birth" className='s-input' key={this.props.person ? this.props.person.id : ""}
                         defaultValue={this.props.person ?  this.props.person.data_urodzenia.substr(0, 10) : ""} />
                 </div>
 
                 <div>
                     <label htmlFor="person-description">Opis:</label>
-                    <textarea type="time" id="person-description" key={this.props.person ? this.props.person.id : ""}
+                    <textarea type="time" id="person-description" className='s-input' key={this.props.person ? this.props.person.id : ""}
                         defaultValue={this.props.person ? this.props.person.opis : ""}></textarea>
                 </div>
                 
                 <div>
-                    <input id='person-form-submit-button' type="button" value={this.props.person ? 'Aktualizuj' : 'Dodaj'} onClick={() => this.submit()}></input>
+                    <input id='person-form-submit-button' className='s-input' type="button" value={this.props.person ? 'Aktualizuj' : 'Dodaj'} onClick={() => this.submit()}></input>
                 </div>
             </div>
         );
