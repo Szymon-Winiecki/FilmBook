@@ -1,0 +1,1 @@
+initdb -D pgdata -U postgres -W -E UTF8 -A scram-sha-256

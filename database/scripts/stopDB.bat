@@ -1,0 +1,1 @@
+pg_ctl -D pgdata stop

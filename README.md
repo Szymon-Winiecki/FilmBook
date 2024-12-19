@@ -40,11 +40,11 @@ Follow these steps to set up and run the application on your local machine.
    - Modify the database user password in `database/create_scheme.ddl` (line #3).
 3. **Initialize the Database**:
    - Run the following scripts:
-     - `database/conf/initDB.bat`
-     - `database/conf/create_scheme.bat`
+     - `database/scripts/initDB.bat`
+     - `database/scripts/create_scheme.bat`
 4. **Start and Stop Database**:
-   - To start the server, run `database/conf/startDB.bat`.
-   - To stop the server, run `database/conf/stopDB.bat`.
+   - To start the server, run `database/scripts/startDB.bat`.
+   - To stop the server, run `database/scripts/stopDB.bat`.
 
 ### 2. Start the Server
 
